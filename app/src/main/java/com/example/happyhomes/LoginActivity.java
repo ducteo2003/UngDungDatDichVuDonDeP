@@ -1,8 +1,13 @@
 package com.example.happyhomes;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,24 +15,72 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhomes.databinding.ActivityLoginBinding;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
 
-    ActivityLoginBinding biding;
+    ActivityLoginBinding binding;
 
+    public static final String DB_NAME="data_app_cleaning.db";
+    public static final String DB_FOLDER="databases";
+    public static final String TBL_NAME = "CUSTOMER";
+
+    SQLiteDatabase db = null;
+    ArrayList<HashMap<String, String>> customers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        biding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(biding.getRoot());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
+        prepareDB();
+        openDB();
+        EventLogin();
 
         Register();
     }
 
+    private void openDB() {
+        db = openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
+    }
+    private void EventLogin() {
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checklogin = false;
+                String emailLogin = binding.txtEmail.getText().toString();
+                String passLogin = binding.txtPassword.getText().toString();
+
+                Cursor c = db.rawQuery("SELECT EMAIL,PASSWORD FROM "+ TBL_NAME, null);
+                while (c.moveToNext())
+                {
+                    if (c.getString(0).equalsIgnoreCase(emailLogin) && c.getString(1).equalsIgnoreCase(passLogin)) {
+                        Toast.makeText(LoginActivity.this, "Login SUCCESS", Toast.LENGTH_SHORT).show();
+                        checklogin = true;
+                        break;
+                    }
+                }
+                if(checklogin == false)
+                {
+                    Toast.makeText(LoginActivity.this, "Login FAIL", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
     private void Register() {
-        biding.txtRegister.setOnClickListener(new View.OnClickListener() {
+        binding.txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -36,5 +89,48 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void prepareDB() {
+        File dbfile = getDatabasePath(DB_NAME);
+        if(!dbfile.exists())
+        {
+            if(CopyDB())
+            {
+                Toast.makeText(this, "Open app SUCCESS", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "Open app FAIL", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+    //copy db vào ứng dụng
+    private boolean CopyDB()
+    {
+        String dbPath = getApplicationInfo().dataDir +"/"+DB_FOLDER+"/"+DB_NAME;
+        try {
+            InputStream inputStream=getAssets().open(DB_NAME);
+            File file= new File(getApplicationInfo().dataDir+"/"+DB_FOLDER+"/");
+            if(!file.exists()){
+                file.mkdir();
+            }
+            OutputStream outputStream= null;
+            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O)
+            {
+                outputStream = Files.newOutputStream(Paths.get(dbPath));
+            }
+            byte[] buffer= new byte[1024];
+            int lenght;
+            while ((lenght=inputStream.read(buffer))>0){
+                outputStream.write(buffer,0,lenght);
+            }
+            outputStream.flush();
+            outputStream.close();
+            inputStream.close();
+            return  true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }
