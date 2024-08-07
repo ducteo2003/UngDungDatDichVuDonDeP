@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Customer.ServiceActivity"
+    android:padding="35dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hello Luu Quang Khanh."
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/customer" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+           <ImageView
+               android:id="@+id/imgService"
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:layout_gravity="center"
+
+               />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/txtMoTa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Job Description"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp" />
+
+            <TextView
+                android:id="@+id/txtmoTa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We highly prioritize your needs which is why Fantastic Cleaners is available seven days a week. We make sure that the cleaning service you will receive is delivered in a timely manner and is done professionally.
+Our professional cleaning team is equipped with the ..."
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Read More"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00BCD4"
+
+                />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/black"
+            android:layout_marginTop="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/earth"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Professional"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/card"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Convenian"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            >
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <RadioButton
+                    android:id="@+id/radioRoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Room"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/radioFloor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Floor"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/radioFullHouse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Full house"
+                    android:buttonTint="@color/black" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="50dp">
+
+                <RadioButton
+                    android:id="@+id/radioOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/radioTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/radioThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:buttonTint="@color/black" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btnOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Order"
+                android:textSize="22sp"
+                android:background="#ffffff"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_home_24"
+            android:backgroundTint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnGido"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_home_24"
+            android:backgroundTint="@color/white"
+            android:layout_marginStart="35dp" />
+
+        <ImageButton
+            android:id="@+id/btnAdd"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/add"
+            android:layout_marginStart="35dp"
+            android:background="@drawable/circle_shape" />
+
+        <ImageButton
+            android:id="@+id/btnMessage"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:src="@drawable/message"
+            android:layout_marginStart="35dp"
+            android:backgroundTint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:src="@drawable/save"
+            android:layout_marginStart="35dp"
+            android:backgroundTint="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

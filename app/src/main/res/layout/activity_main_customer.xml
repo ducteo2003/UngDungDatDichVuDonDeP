@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Customer.Main_CustomerActivity"
+    android:padding="30dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hello Luu Quang Khanh."
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/customer" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_customer_main"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="50% Off Everything!"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save big on your entire other."
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp" />
+
+            <Button
+                android:id="@+id/btnOrderNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Now"
+                android:backgroundTint="#FF9800"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Services"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_marginStart="20dp" />
+
+            <ListView
+                android:id="@+id/lvService"
+                android:layout_width="match_parent"
+                android:layout_height="420dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_home_24"
+            android:backgroundTint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnGido"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_home_24"
+            android:backgroundTint="@color/white"
+            android:layout_marginStart="35dp" />
+
+        <ImageButton
+            android:id="@+id/btnAdd"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/add"
+            android:layout_marginStart="35dp"
+            android:background="@drawable/circle_shape" />
+
+        <ImageButton
+            android:id="@+id/btnMessage"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:src="@drawable/message"
+            android:layout_marginStart="35dp"
+            android:backgroundTint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:src="@drawable/save"
+            android:layout_marginStart="35dp"
+            android:backgroundTint="@color/white" />
+    </LinearLayout>
+
+
+</RelativeLayout>
