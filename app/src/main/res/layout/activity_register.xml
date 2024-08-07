@@ -72,7 +72,7 @@
             android:layout_marginTop="10dp"
             />
         <EditText
-            android:id="@+id/txtPasswprd"
+            android:id="@+id/txtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your Passwprd"
@@ -98,10 +98,10 @@
         </LinearLayout>
 
         <Button
-
+            android:id="@+id/btnRegister"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:text="LOGIN"
+            android:text="Register"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             />
