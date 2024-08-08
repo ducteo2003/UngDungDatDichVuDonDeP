@@ -48,7 +48,7 @@ public class NhanVienActivity extends AppCompatActivity {
 
     private void showBottomSheet() {
         Dialog dialog = new Dialog(NhanVienActivity.this);
-        dialog.setContentView(R.layout.bootom_nvdialog);
+        dialog.setContentView(R.layout.bottom_dialog);
 
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.gravity = Gravity.START | Gravity.TOP; // Hiển thị ở bên trái và phía trên
