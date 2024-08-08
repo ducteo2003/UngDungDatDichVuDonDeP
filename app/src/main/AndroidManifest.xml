@@ -13,10 +13,13 @@
         android:theme="@style/Theme.HappyHomes"
         tools:targetApi="31">
         <activity
+            android:name=".NhanVien.bottom_dialog"
+            android:exported="false" />
+        <activity
             android:name=".Customer.Main_CustomerActivity"
             android:exported="false" />
         <activity
-            android:name=".NhanVien.NhanVienActivity"
+            android:name=".Customer.ServiceActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -28,7 +31,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Customer.ServiceActivity"
+            android:name=".NhanVien.NhanVienActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
