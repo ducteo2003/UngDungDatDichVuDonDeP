@@ -19,34 +19,20 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txtUserName"
+                android:id="@+id/txtLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Hello Luu Quang Khanh."
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/customer" />
+                android:src="@drawable/baseline_location_pin_24" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
 
-           <ImageView
-               android:id="@+id/imgService"
-               android:layout_width="100dp"
-               android:layout_height="100dp"
-               android:layout_gravity="center"
-
-               />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,28 +49,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginStart="20dp" />
-
-            <TextView
-                android:id="@+id/txtmoTa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="We highly prioritize your needs which is why Fantastic Cleaners is available seven days a week. We make sure that the cleaning service you will receive is delivered in a timely manner and is done professionally.
-Our professional cleaning team is equipped with the ..."
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_marginStart="20dp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Read More"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#00BCD4"
-
-                />
-
-
         </LinearLayout>
 
         <View
