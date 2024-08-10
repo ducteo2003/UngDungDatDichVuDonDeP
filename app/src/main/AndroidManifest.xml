@@ -22,7 +22,7 @@
             android:name=".Customer.ServiceActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".NhanVien.NhanVienActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
@@ -31,7 +31,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".NhanVien.NhanVienActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

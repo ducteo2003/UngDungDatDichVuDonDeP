@@ -52,20 +52,25 @@ public class RegisterActivity extends AppCompatActivity {
 
                 try {
                     db.execSQL(sql);
-                    Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                    gotoLogin();
+                    Toast.makeText(RegisterActivity.this, "Registration Successful.\n You can login now!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(RegisterActivity.this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+    public void gotoLogin()
+    {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 
     private void login() {
         binding.txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
+               gotoLogin();
             }
         });
     }
