@@ -9,14 +9,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.happyhomes.R;
+import com.example.happyhomes.databinding.BottomDialogBinding;
 
 public class bottom_dialog extends AppCompatActivity {
 
+    BottomDialogBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.bottom_dialog);
+        binding = BottomDialogBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
 
     }
 }
