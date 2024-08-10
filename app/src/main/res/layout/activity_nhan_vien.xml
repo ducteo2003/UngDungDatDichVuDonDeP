@@ -23,7 +23,7 @@
             />
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/txtuser_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/profile_image"
@@ -33,10 +33,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/status"
+            android:id="@+id/txtstatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/user_name"
+            android:layout_below="@id/txtuser_name"
             android:layout_toRightOf="@id/profile_image"
             android:layout_marginStart="8dp"
             android:text="Tạm nghỉ"
@@ -110,6 +110,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnCheckIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#00BCD4"
