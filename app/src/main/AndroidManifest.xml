@@ -21,7 +21,8 @@
             android:exported="false" />
         <activity
             android:name=".Customer.MapCustomerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/MapTheme"/>
         <activity
             android:name=".NhanVien.NhanVienActivity"
             android:exported="false" />
