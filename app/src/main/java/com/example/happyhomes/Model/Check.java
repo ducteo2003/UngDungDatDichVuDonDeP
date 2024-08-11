@@ -5,6 +5,7 @@ public class Check {
     private int emId;
     private byte[] checkPic;
     private int checkType;
+    private String checkTime;
 
     public int getCheckId() {
         return checkId;
@@ -18,11 +19,12 @@ public class Check {
         return emId;
     }
 
-    public Check(int checkId, int emId, byte[] checkPic, int checkType) {
+    public Check(int checkId, int emId, byte[] checkPic, int checkType, String checkTime) {
         this.checkId = checkId;
         this.emId = emId;
         this.checkPic = checkPic;
         this.checkType = checkType;
+        this.checkTime = checkTime;
     }
 
     public void setEmId(int emId) {
@@ -43,5 +45,13 @@ public class Check {
 
     public void setCheckType(int checkType) {
         this.checkType = checkType;
+    }
+
+    public String getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(String checkTime) {
+        this.checkTime = checkTime;
     }
 }
