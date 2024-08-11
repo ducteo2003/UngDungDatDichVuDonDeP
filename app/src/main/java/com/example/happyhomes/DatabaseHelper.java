@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SERVICE = "SERVICE";
     public static final String COLUMN_SERVICE_ID = "SERVICEID";
     public static final String COLUMN_SERVICE_TYPE = "SERVICETYPE";
+    public static final String COLUMN_SERVICE_COST = "SERVICECOST";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -92,20 +93,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             while (cursor.moveToNext()) {
                 int serviceId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_ID));
                 String serviceType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_TYPE));
+                double serviceCost = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_COST)); // Fetch the service cost
 
-                services.add(new Service(serviceId, serviceType));
+                services.add(new Service(serviceId, serviceType, serviceCost)); // Pass the serviceCost to the Service constructor
             }
             cursor.close();
         }
         return services;
     }
 
-    public void addService(int serviceId, String serviceType) {
+    // Update the addService method to include serviceCost
+    public void addService(int serviceId, String serviceType, double serviceCost) {
         SQLiteDatabase db = this.openDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_SERVICE_ID, serviceId);
         values.put(COLUMN_SERVICE_TYPE, serviceType);
+        values.put(COLUMN_SERVICE_COST, serviceCost); // Add serviceCost here
         db.insert(TABLE_SERVICE, null, values);
         db.close();
     }
+
 }

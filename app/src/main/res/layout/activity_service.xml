@@ -1,60 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Customer.ServiceActivity"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white"
+    tools:context=".Customer.ServiceActivity">
 
-    <!-- Service List -->
-    <ListView
-        android:id="@+id/serviceListView"
+    <!-- Address Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/dropdownIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:src="@drawable/baseline_location_pin_24" />
+    </RelativeLayout>
+
+    <!-- Duration Section -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomBar"
-        android:padding="8dp"/>
+        android:text="Thời lượng"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
 
-    <!-- Bottom Navigation Bar -->
-    <LinearLayout
-        android:id="@+id/bottomBar"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@color/white"
-        android:padding="8dp">
+        android:text="Vui lòng ước tính diện tích cần dọn dẹp và chọn phương án phù hợp."
+        android:textColor="#F44336"
+        android:textSize="14sp"
+        android:paddingBottom="16dp" />
 
-        <ImageButton
-            android:id="@+id/btnHome"
-            android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/durationRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioTwoHours"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_home_24"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp" />
 
-        <ImageButton
-            android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
+
+        <RadioButton
+            android:id="@+id/radioThreeHours"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/add"
-            android:background="@drawable/circle_shape"/>
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp" />
 
-        <ImageButton
-            android:id="@+id/btnMessage"
-            android:layout_width="wrap_content"
+        <RadioButton
+            android:id="@+id/radioFourHours"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/message"
-            android:layout_marginStart="24dp"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp" />
+    </RadioGroup>
 
-        <ImageButton
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/save"
-            android:layout_marginStart="24dp"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-    </LinearLayout>
-
-</RelativeLayout>
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        android:text="Tiếp theo"
+        android:backgroundTint="#2196F3"
+        android:textColor="@android:color/white" />
+</LinearLayout>
