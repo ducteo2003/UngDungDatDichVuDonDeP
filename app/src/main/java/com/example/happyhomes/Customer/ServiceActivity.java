@@ -1,20 +1,16 @@
 package com.example.happyhomes.Customer;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log; // Import for logging
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.util.Log;
+import android.widget.RadioButton;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.happyhomes.DatabaseHelper;
 import com.example.happyhomes.Model.Service;
 import com.example.happyhomes.R;
 import com.example.happyhomes.databinding.ActivityServiceBinding;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceActivity extends AppCompatActivity {
@@ -22,8 +18,7 @@ public class ServiceActivity extends AppCompatActivity {
     private ActivityServiceBinding binding;
     private DatabaseHelper databaseHelper;
     private List<Service> serviceList;
-    private ArrayAdapter<String> adapter;
-    private static final String TAG = "ServiceActivity"; // Tag for logging
+    private static final String TAG = "ServiceActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +27,9 @@ public class ServiceActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         databaseHelper = new DatabaseHelper(this);
-        serviceList = new ArrayList<>();
-
-        // Use Data Binding to find ListView
-        ListView serviceListView = binding.serviceListView;
 
         try {
-            // Initialize and copy the database if necessary
+            // Initialize and copy database if needed
             databaseHelper.createDatabase();
             Log.d(TAG, "Database created successfully.");
         } catch (IOException e) {
@@ -47,11 +38,19 @@ public class ServiceActivity extends AppCompatActivity {
             return;
         }
 
-        // Load services from the database and display them
-        loadServices(serviceListView);
+        Intent intent = getIntent();
+        String address = intent.getStringExtra("address");
+        if (address != null) {
+            binding.address.setText(address);
+        } else {
+            binding.address.setText("No address selected");
+        }
+
+        // Load services from database and display them in RadioButtons
+        loadServicesIntoRadioButtons();
     }
 
-    private void loadServices(ListView listView) {
+    private void loadServicesIntoRadioButtons() {
         // Open the database
         try {
             databaseHelper.openDatabase();
@@ -62,32 +61,33 @@ public class ServiceActivity extends AppCompatActivity {
             return;
         }
 
-        // Get services from database
+        // Fetch services from the database
         serviceList = databaseHelper.getAllServices();
 
-        // Check if serviceList is empty
+        // Check if service list is empty
         if (serviceList == null || serviceList.isEmpty()) {
-            Log.d(TAG, "No services found in the database.");
+            Log.d(TAG, "No services available in the database.");
             Toast.makeText(this, "No services available", Toast.LENGTH_LONG).show();
             return;
         }
 
-        // Convert to String list for adapter
-        ArrayList<String> serviceNames = new ArrayList<>();
-        for (Service service : serviceList) {
-            serviceNames.add(service.getServiceType());
+        // Set service types to RadioButtons
+        if (serviceList.size() > 0) {
+            binding.radioTwoHours.setText(serviceList.get(0).getServiceType());
+            Log.d(TAG, "Setting text for radioTwoHours: " + serviceList.get(0).getServiceType());
+        }
+        if (serviceList.size() > 1) {
+            binding.radioThreeHours.setText(serviceList.get(1).getServiceType());
+            Log.d(TAG, "Setting text for radioThreeHours: " + serviceList.get(1).getServiceType());
+        }
+        if (serviceList.size() > 2) {
+            binding.radioFourHours.setText(serviceList.get(2).getServiceType());
+            Log.d(TAG, "Setting text for radioFourHours: " + serviceList.get(2).getServiceType());
         }
 
-        // Check if serviceNames list is populated
-        if (serviceNames.isEmpty()) {
-            Log.d(TAG, "Service names list is empty.");
-        } else {
-            Log.d(TAG, "Service names list populated with " + serviceNames.size() + " items.");
-        }
-
-        // Setup adapter
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, serviceNames);
-        listView.setAdapter(adapter);
-        Log.d(TAG, "Adapter set with " + serviceNames.size() + " items.");
+        // Optional: Set default checked RadioButton
+        binding.radioFourHours.setChecked(true);
+        Log.d(TAG, "RadioFourHours set to checked.");
     }
+
 }

@@ -2,4 +2,6 @@
     <string name="app_name">HappyHomes</string>
     <string name="my_map_api_key">AIzaSyCMigCPqQ1wFomyAnYHGO7AismR7Ym9_WI</string>
     <string name="x_c_nh_n">Xác nhận</string>
+    <string name="tr_l_i">trở lại</string>
+    <string name="icon_time">icon time</string>
 </resources>
