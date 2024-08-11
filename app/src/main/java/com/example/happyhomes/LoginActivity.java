@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhomes.Customer.Main_CustomerActivity;
 import com.example.happyhomes.Model.Customer;
+import com.example.happyhomes.Model.Employee;
 import com.example.happyhomes.NhanVien.NhanVienActivity;
 import com.example.happyhomes.databinding.ActivityLoginBinding;
 
@@ -85,9 +86,22 @@ public class LoginActivity extends AppCompatActivity {
                     if (employees.getString(2).equalsIgnoreCase(emailLogin) && employees.getString(3).equalsIgnoreCase(passLogin)) {
                         Toast.makeText(LoginActivity.this, "Login SUCCESS", Toast.LENGTH_SHORT).show();
                         checklogin = true;
+
+                        // Lấy thông tin nhân viên
+                        Employee employee = new Employee(
+                                employees.getInt(0), // emId
+                                employees.getString(1), // emName
+                                employees.getString(2), // emEmail
+                                employees.getString(3) // password
+                        );
+
+                        // Chuyển sang NhanVienActivity
                         Intent intent = new Intent(LoginActivity.this, NhanVienActivity.class);
+                        intent.putExtra("Employee", employee);
                         startActivity(intent);
                         break;
+
+
                     }
                 }
                 if(checklogin == false)

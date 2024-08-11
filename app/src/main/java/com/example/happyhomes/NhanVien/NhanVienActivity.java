@@ -18,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.happyhomes.Model.Employee;
 import com.example.happyhomes.R;
 import com.example.happyhomes.databinding.ActivityNhanVienBinding;
 
@@ -44,6 +45,19 @@ public class NhanVienActivity extends AppCompatActivity {
 
 
     private void addEvents() {
+
+        // Nhận dữ liệu Employee từ Intent
+        Intent intent = getIntent();
+        Employee employee = (Employee) intent.getSerializableExtra("Employee");
+
+        //Hien thi thong tin
+        if(employee != null){
+            binding.txtusername.setText(employee.getEmName());
+        }
+
+
+
+
 
         //hien thi dialog
         binding.layotProfile.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +91,7 @@ public class NhanVienActivity extends AppCompatActivity {
 
     }
 
-    //tạm làm
+    //tạm nghỉ
     private void showConfirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(NhanVienActivity.this);
         builder.setTitle("Xác nhận nghỉ");
@@ -146,8 +160,17 @@ public class NhanVienActivity extends AppCompatActivity {
     }
 
     private void showBottomSheet() {
+
+        // Nhận dữ liệu Employee từ Intent
+        Employee employee = (Employee) getIntent().getSerializableExtra("Employee");
+
         Dialog dialog = new Dialog(NhanVienActivity.this);
         dialog.setContentView(R.layout.bottom_dialog);
+
+        TextView txtEmployeeName = dialog.findViewById(R.id.txtusername);
+        if(employee != null){
+            txtEmployeeName.setText(employee.getEmName());
+        }
 
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.gravity = Gravity.START | Gravity.TOP; // Hiển thị ở bên trái và phía trên
