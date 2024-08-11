@@ -13,6 +13,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.happyhomes.Customer.Main_CustomerActivity;
+import com.example.happyhomes.Model.Customer;
+import com.example.happyhomes.NhanVien.NhanVienActivity;
 import com.example.happyhomes.databinding.ActivityLoginBinding;
 
 import java.io.File;
@@ -32,7 +35,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String DB_NAME="data_app_cleaning.db";
     public static final String DB_FOLDER="databases";
-    public static final String TBL_NAME = "CUSTOMER";
+    public static final String TBL_NAME_CUS = "CUSTOMER";
+    public static final String TBL_NAME_EMP = "EMPLOYEE";
 
     SQLiteDatabase db = null;
     ArrayList<HashMap<String, String>> customers;
@@ -60,13 +64,29 @@ public class LoginActivity extends AppCompatActivity {
                 boolean checklogin = false;
                 String emailLogin = binding.txtEmail.getText().toString();
                 String passLogin = binding.txtPassword.getText().toString();
-
-                Cursor c = db.rawQuery("SELECT EMAIL,PASSWORD FROM "+ TBL_NAME, null);
-                while (c.moveToNext())
+                //LOGIN CUSTOMER
+                Cursor customers = db.rawQuery("SELECT * FROM "+ TBL_NAME_CUS, null);
+                while (customers.moveToNext())
                 {
-                    if (c.getString(0).equalsIgnoreCase(emailLogin) && c.getString(1).equalsIgnoreCase(passLogin)) {
+                    if (customers.getString(3).equalsIgnoreCase(emailLogin) && customers.getString(6).equalsIgnoreCase(passLogin)) {
+                        Toast.makeText(LoginActivity.this, "Login SUCCESS", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, Main_CustomerActivity.class);
+                        intent.putExtra("Cusname", customers.getString(1));
+                        intent.putExtra("CusId", customers.getString(0));
+                        startActivity(intent);
+                        checklogin = true;
+                        break;
+                    }
+                }
+                //LOGIN EMPLOYEE
+                Cursor employees = db.rawQuery("SELECT * FROM "+ TBL_NAME_EMP, null);
+                while (employees.moveToNext())
+                {
+                    if (employees.getString(2).equalsIgnoreCase(emailLogin) && employees.getString(3).equalsIgnoreCase(passLogin)) {
                         Toast.makeText(LoginActivity.this, "Login SUCCESS", Toast.LENGTH_SHORT).show();
                         checklogin = true;
+                        Intent intent = new Intent(LoginActivity.this, NhanVienActivity.class);
+                        startActivity(intent);
                         break;
                     }
                 }
