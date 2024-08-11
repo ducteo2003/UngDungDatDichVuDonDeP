@@ -45,6 +45,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
     private String selectedAddress = null; // Biến lưu địa chỉ được chọn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Chọn Vị Trí");
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         binding = ActivityMapCustomerBinding.inflate(getLayoutInflater());
@@ -60,7 +61,6 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                 searchLocation(query);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
