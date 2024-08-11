@@ -1,5 +1,6 @@
 package com.example.happyhomes.Customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -9,14 +10,26 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.happyhomes.R;
+import com.example.happyhomes.databinding.ActivityMainCustomerBinding;
 
 public class Main_CustomerActivity extends AppCompatActivity {
 
+    private String cusID;
+
+    ActivityMainCustomerBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_customer);
-
+        binding = ActivityMainCustomerBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        loadActivity();
+    }
+    public void loadActivity()
+    {
+        Intent intent = getIntent();
+        binding.txtUserName.setText(String.format("Hello%s ", intent.getStringExtra("Cusname")));
+        cusID = intent.getStringExtra("CusId");
     }
 }
