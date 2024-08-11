@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyHomes"
+
         tools:targetApi="31">
         <activity
             android:name=".NhanVien.NhanVienActivity"
@@ -39,6 +40,7 @@
             android:exported="false" />
         <activity
             android:name=".Customer.MapCustomerActivity"
+            android:theme="@style/MapTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
