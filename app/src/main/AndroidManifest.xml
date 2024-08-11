@@ -35,7 +35,7 @@
             android:name=".Customer.ServiceActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Customer.PayAndConfirmActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
@@ -44,7 +44,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Customer.PayAndConfirmActivity"
+            android:name=".LoginActivity"
             android:exported="true"
            >
             <intent-filter>
