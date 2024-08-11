@@ -23,7 +23,7 @@
             />
 
         <TextView
-            android:id="@+id/txtuser_name"
+            android:id="@+id/txtusername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/profile_image"
@@ -36,7 +36,7 @@
             android:id="@+id/txtstatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtuser_name"
+            android:layout_below="@id/txtusername"
             android:layout_toRightOf="@id/profile_image"
             android:layout_marginStart="8dp"
             android:text="Tạm nghỉ"

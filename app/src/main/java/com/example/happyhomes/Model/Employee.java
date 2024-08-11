@@ -1,6 +1,8 @@
 package com.example.happyhomes.Model;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable {
     private int emId;
     private String emName;
     private String emEmail;

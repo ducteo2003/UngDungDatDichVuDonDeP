@@ -30,7 +30,7 @@
             android:name=".Customer.ServiceActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Customer.MapCustomerActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
@@ -39,7 +39,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Customer.MapCustomerActivity"
+            android:name=".LoginActivity"
             android:theme="@style/MapTheme"
             android:exported="true">
             <intent-filter>

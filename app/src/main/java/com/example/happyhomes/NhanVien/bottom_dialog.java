@@ -21,6 +21,12 @@ public class bottom_dialog extends AppCompatActivity {
         binding = BottomDialogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Nhận dữ liệu từ Intent
+        String employeeName = getIntent().getStringExtra("EmployeeName");
+        // Hiển thị dữ liệu
+        if (employeeName != null) {
+            binding.txtusername.setText(employeeName);
+        }
 
     }
 }
