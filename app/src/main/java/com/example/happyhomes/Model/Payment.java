@@ -6,7 +6,7 @@ public class Payment {
     private int cusId;
     private int serviceId;
     private String payDay;
-    private double payMoney;
+
 
     public int getPayId() {
         return payId;
@@ -48,20 +48,13 @@ public class Payment {
         this.payDay = payDay;
     }
 
-    public double getPayMoney() {
-        return payMoney;
-    }
 
-    public void setPayMoney(double payMoney) {
-        this.payMoney = payMoney;
-    }
-
-    public Payment(int payId, int methodId, int cusId, int serviceId, String payDay, double payMoney) {
+    public Payment(int payId, int methodId, int cusId, int serviceId, String payDay) {
         this.payId = payId;
         this.methodId = methodId;
         this.cusId = cusId;
         this.serviceId = serviceId;
         this.payDay = payDay;
-        this.payMoney = payMoney;
+
     }
 }

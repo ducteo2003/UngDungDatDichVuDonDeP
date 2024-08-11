@@ -3,6 +3,7 @@ package com.example.happyhomes.Model;
 public class Service {
     private int serviceId;
     private String serviceType;
+    private double serviceCost;
 
     public int getServiceId() {
         return serviceId;
@@ -20,8 +21,17 @@ public class Service {
         this.serviceType = serviceType;
     }
 
-    public Service(int serviceId, String serviceType) {
+    public double getServiceCost() {
+        return serviceCost;
+    }
+
+    public void setServiceCost(double serviceCost) {
+        this.serviceCost = serviceCost;
+    }
+
+    public Service(int serviceId, String serviceType, double serviceCost) {
         this.serviceId = serviceId;
         this.serviceType = serviceType;
+        this.serviceCost = serviceCost;
     }
 }
