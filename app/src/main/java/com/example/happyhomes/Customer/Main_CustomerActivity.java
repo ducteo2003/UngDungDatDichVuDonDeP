@@ -29,7 +29,15 @@ public class Main_CustomerActivity extends AppCompatActivity {
     public void loadActivity()
     {
         Intent intent = getIntent();
-        binding.txtUserName.setText(String.format("Hello%s ", intent.getStringExtra("Cusname")));
-        cusID = intent.getStringExtra("CusId");
+        if (intent != null) {
+            String cusName = intent.getStringExtra("Cusname");
+            String cusId = intent.getStringExtra("CusId");
+
+            if (cusName != null && cusId != null) {
+                binding.txtUserName.setText(String.format("Xin chào, "+ cusName));
+                cusID = cusId;
+            }
+        }
+
     }
 }

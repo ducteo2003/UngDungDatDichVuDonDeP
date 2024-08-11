@@ -4,8 +4,7 @@ public class ServiceDetail {
     private int cusId;
     private int serviceId;
     private int payId;
-    private String timeAndArea;
-    private String addServices;
+    private String note;
 
     public int getCusId() {
         return cusId;
@@ -31,27 +30,18 @@ public class ServiceDetail {
         this.payId = payId;
     }
 
-    public String getTimeAndArea() {
-        return timeAndArea;
+    public String getNote() {
+        return note;
     }
 
-    public void setTimeAndArea(String timeAndArea) {
-        this.timeAndArea = timeAndArea;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public String getAddServices() {
-        return addServices;
-    }
-
-    public void setAddServices(String addServices) {
-        this.addServices = addServices;
-    }
-
-    public ServiceDetail(int cusId, int serviceId, int payId, String timeAndArea, String addServices) {
+    public ServiceDetail(int cusId, int serviceId, int payId, String note) {
         this.cusId = cusId;
         this.serviceId = serviceId;
         this.payId = payId;
-        this.timeAndArea = timeAndArea;
-        this.addServices = addServices;
+        this.note = note;
     }
 }
