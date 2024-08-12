@@ -1,6 +1,8 @@
 package com.example.happyhomes.NhanVien;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,5 +30,25 @@ public class bottom_dialog extends AppCompatActivity {
             binding.txtusername.setText(employeeName);
         }
 
+        addEvents();
+
+
     }
+
+    private void addEvents() {
+
+
+
+
+            //mo trung tam o tro
+            binding.txtHotro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent( bottom_dialog.this, HoTroActivity.class);
+                    startActivity(intent);
+                }
+            });
+    }
+
+
 }

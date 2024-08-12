@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.happyhomes.Model.Check;
+import com.example.happyhomes.Model.Employee;
 import com.example.happyhomes.Model.Service;
 
 import java.io.FileOutputStream;
@@ -30,6 +32,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SERVICE = "SERVICE";
     public static final String COLUMN_SERVICE_ID = "SERVICEID";
     public static final String COLUMN_SERVICE_TYPE = "SERVICETYPE";
+
+    public static final String TABLE_CHECK = "'CHECK'";
+    public static final String COLUMN_CHECK_ID = "CHECKID";
+    public static final String COLUMN_EMPLOYEE_ID = "EMID";
+    public static final String COLUMN_CHECK_PIC = "CHECKPIC";
+    public static final String COLUMN_CHECK_TYPE = "CHECKTYPE";
+    public static final String COLUMN_CHECK_TIME = "TIME";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -107,5 +116,77 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SERVICE_TYPE, serviceType);
         db.insert(TABLE_SERVICE, null, values);
         db.close();
+
+
+    }
+
+    // Method to add a check record
+    public void addCheck(Check check) {
+        SQLiteDatabase db = this.openDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EMPLOYEE_ID, check.getEmId());
+        values.put(COLUMN_CHECK_PIC, check.getCheckPic());
+        values.put(COLUMN_CHECK_TYPE, check.getCheckType());
+        values.put(COLUMN_CHECK_TIME, check.getCheckTime());
+
+        // Thêm log để kiểm tra nội dung của ContentValues
+        Log.d("DatabaseHelper", "Inserting Check - Values: " + values.toString());
+
+        long result = db.insert(TABLE_CHECK, null, values);
+        // Kiểm tra kết quả chèn dữ liệu
+        if (result == -1) {
+            Log.e("DatabaseHelper", "Failed to insert Check.");
+        } else {
+            Log.d("DatabaseHelper", "Check inserted successfully with ID: " + result);
+        }
+        db.close();
+    }
+
+    //get duu lieu dua tren EMID
+    public Employee getEmployeeById(int employeeId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("EMPLOYEE",
+                new String[]{"EMID", "EMNAME", "EMEMAIL"},  // Đúng tên cột
+                "EMID = ?",
+                new String[]{String.valueOf(employeeId)},
+                null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Employee employee = new Employee(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("EMID")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("EMNAME")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("EMEMAIL")),
+                    null
+            );
+            cursor.close();
+            return employee;
+        } else {
+            return null;
+        }
+
+    }
+
+
+    public List<Check> getAllChecks() {
+        List<Check> checks = new ArrayList<>();
+        SQLiteDatabase db = this.openDatabase();
+
+        Cursor cursor = db.query(TABLE_CHECK, null, null, null, null, null, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                int checkId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CHECK_ID));
+                int emId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EMPLOYEE_ID));
+                byte[] checkPic = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_CHECK_PIC));
+                int checkType = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CHECK_TYPE));
+                String checkTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CHECK_TIME));
+
+                checks.add(new Check(checkId, emId, checkPic, checkType, checkTime));
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return checks;
     }
 }
