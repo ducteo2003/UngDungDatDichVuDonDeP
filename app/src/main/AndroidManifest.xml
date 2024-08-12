@@ -16,33 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyHomes"
         tools:targetApi="31">
-        <activity
-            android:name=".NhanVien.TaiKhoan"
-            android:exported="false"
-            android:theme="@style/HoTro"/>
-        <activity
-            android:name=".NhanVien.HopTac"
-            android:exported="false"
-            android:theme="@style/HoTro"/>
-        <activity
-            android:name=".NhanVien.ChinhSach"
-            android:exported="false"
-            android:theme="@style/HoTro"/>
-        <activity
-            android:name=".NhanVien.ThuNhap"
-            android:exported="false"
-            android:theme="@style/HoTro"/>
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
+
+      
         <activity
             android:name=".NhanVien.HoSoNVActivity"
             android:exported="false"
             android:theme="@style/HoTro" />
-        <activity
-            android:name=".NhanVien.HoTroActivity"
-            android:exported="false"
-            android:theme="@style/HoTro" />
+
         <activity
             android:name=".NhanVien.NhanVienActivity"
             android:exported="false" />
@@ -55,10 +35,7 @@
         <activity
             android:name=".Customer.ServiceActivity"
             android:exported="false" />
-        <activity
-            android:name=".Customer.MapCustomerActivity"
-            android:exported="false"
-            android:theme="@style/MapTheme" />
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -66,7 +43,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".NhanVien.QuyTrinh"
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/HoTro">
             <intent-filter>
