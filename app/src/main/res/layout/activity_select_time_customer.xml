@@ -203,6 +203,7 @@
             android:layout_marginTop="8dp" />
 
         <EditText
+            android:id="@+id/edtNote"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:hint="Bạn có yêu cầu gì thêm, hãy nhập ở đây nhé"
@@ -234,6 +235,7 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tiếp theo"

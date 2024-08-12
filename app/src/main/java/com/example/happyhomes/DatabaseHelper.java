@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.example.happyhomes.Model.Service;
+import com.example.happyhomes.Model.ServiceDetail;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,6 +32,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SERVICE_ID = "SERVICEID";
     public static final String COLUMN_SERVICE_TYPE = "SERVICETYPE";
     public static final String COLUMN_SERVICE_COST = "SERVICECOST";
+
+    public static final String TABLE_SERVICE_DETAIL = "SERVICE_DETAIL";
+    public static final String COLUMN_CUS_ID = "CUSID";
+    public static final String COLUMN_SERVICE_ID_DETAIL = "SERVICEID";
+    public static final String COLUMN_PAY_ID = "PAYID";
+    public static final String COLUMN_NOTE = "NOTE";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -113,4 +120,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addServiceDetail(ServiceDetail serviceDetail) {
+        SQLiteDatabase db = this.openDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CUS_ID, serviceDetail.getCusId());
+        values.put(COLUMN_SERVICE_ID_DETAIL, serviceDetail.getServiceId());
+        values.put(COLUMN_PAY_ID, serviceDetail.getPayId());
+        values.put(COLUMN_NOTE, serviceDetail.getNote());
+
+        db.insert(TABLE_SERVICE_DETAIL, null, values);
+        db.close();
+    }
 }
