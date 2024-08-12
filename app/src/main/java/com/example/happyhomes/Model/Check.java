@@ -19,13 +19,13 @@ public class Check {
         return emId;
     }
 
-    public Check(int checkId, int emId, byte[] checkPic, int checkType, String checkTime) {
-        this.checkId = checkId;
+    public Check(int emId, byte[] checkPic, int checkType, String checkTime) {
         this.emId = emId;
         this.checkPic = checkPic;
         this.checkType = checkType;
         this.checkTime = checkTime;
     }
+
 
     public void setEmId(int emId) {
         this.emId = emId;
@@ -54,4 +54,14 @@ public class Check {
     public void setCheckTime(String checkTime) {
         this.checkTime = checkTime;
     }
+
+    //test
+    public Check(int checkId, int emId, byte[] checkPic, int checkType, String checkTime) {
+        this.checkId = checkId;
+        this.emId = emId;
+        this.checkPic = checkPic;
+        this.checkType = checkType;
+        this.checkTime = checkTime;
+    }
+
 }
