@@ -122,6 +122,7 @@
                 android:paddingVertical="10dp">
 
                 <TextView
+                    android:id="@+id/txtHotro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trung tâm hỗ trợ"
@@ -129,7 +130,23 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layotCaiDat"
+                android:id="@+id/layoutHoSo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hồ sơ của tôi"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layotĐangXuat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -139,7 +156,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cài đặt"
+                    android:text="Đăng xuất"
                     android:textSize="18sp" />
             </LinearLayout>
 
