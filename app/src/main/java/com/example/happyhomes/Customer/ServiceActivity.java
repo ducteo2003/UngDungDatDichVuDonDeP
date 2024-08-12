@@ -45,11 +45,12 @@ public class ServiceActivity extends AppCompatActivity {
         } else {
             binding.address.setText("No address selected");
         }
-
         // Load services from database and display them in RadioButtons
         loadServicesIntoRadioButtons();
+        addEvents();
     }
 
+    //load radiobtn service
     private void loadServicesIntoRadioButtons() {
         try {
             databaseHelper.openDatabase();
@@ -69,17 +70,17 @@ public class ServiceActivity extends AppCompatActivity {
         }
 
         if (serviceList.size() > 0) {
-            String serviceInfo = serviceList.get(0).getServiceType() + " - " + serviceList.get(0).getServiceCost()+"VND";
+            String serviceInfo = serviceList.get(0).getServiceType() + " - " + serviceList.get(0).getServiceCost() + "VND";
             binding.radioTwoHours.setText(serviceInfo);
             Log.d(TAG, "Setting text for radioTwoHours: " + serviceInfo);
         }
         if (serviceList.size() > 1) {
-            String serviceInfo = serviceList.get(1).getServiceType() + " - " + serviceList.get(1).getServiceCost()+"VND";
+            String serviceInfo = serviceList.get(1).getServiceType() + " - " + serviceList.get(1).getServiceCost() + "VND";
             binding.radioThreeHours.setText(serviceInfo);
             Log.d(TAG, "Setting text for radioThreeHours: " + serviceInfo);
         }
         if (serviceList.size() > 2) {
-            String serviceInfo = serviceList.get(2).getServiceType() + " - "+serviceList.get(2).getServiceCost()+"VND";
+            String serviceInfo = serviceList.get(2).getServiceType() + " - " + serviceList.get(2).getServiceCost() + "VND";
             binding.radioFourHours.setText(serviceInfo);
             Log.d(TAG, "Setting text for radioFourHours: " + serviceInfo);
         }
@@ -88,4 +89,31 @@ public class ServiceActivity extends AppCompatActivity {
         Log.d(TAG, "RadioFourHours set to checked.");
     }
 
+    //chuyen tiep man hinh
+    private void addEvents() {
+        binding.nextButton.setOnClickListener(v -> {
+            Intent selectTimeIntent = new Intent(ServiceActivity.this, SelectTimeCustomerActivity.class);
+
+            String selectedServiceType = "";
+            int selectedServiceId = -1;  // Default value if no service is selected
+
+            if (binding.radioTwoHours.isChecked()) {
+                selectedServiceType = binding.radioTwoHours.getText().toString();
+                selectedServiceId = serviceList.get(0).getServiceId();
+            } else if (binding.radioThreeHours.isChecked()) {
+                selectedServiceType = binding.radioThreeHours.getText().toString();
+                selectedServiceId = serviceList.get(1).getServiceId();
+            } else if (binding.radioFourHours.isChecked()) {
+                selectedServiceType = binding.radioFourHours.getText().toString();
+                selectedServiceId = serviceList.get(2).getServiceId();
+            }
+
+            // Pass the selected service type and serviceId to the next activity
+            selectTimeIntent.putExtra("selectedServiceType", selectedServiceType);
+            selectTimeIntent.putExtra("selectedServiceId", selectedServiceId);
+            startActivity(selectTimeIntent);
+        });
+
+    }
 }
+

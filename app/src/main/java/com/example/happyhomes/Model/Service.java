@@ -1,5 +1,7 @@
 package com.example.happyhomes.Model;
 
+import java.io.Serializable;
+
 public class Service {
     private int serviceId;
     private String serviceType;
