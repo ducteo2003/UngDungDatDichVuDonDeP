@@ -2,19 +2,18 @@ package com.example.happyhomes.Model;
 
 
 public class Customer {
-    private int cusId;
+    private Long cusId;
     private String cusName;
     private String phoneNumber;
     private String email;
     private String address;
-    private String username;
     private String password;
 
-    public int getCusId() {
+    public Long getCusId() {
         return cusId;
     }
 
-    public void setCusId(int cusId) {
+    public void setCusId(Long cusId) {
         this.cusId = cusId;
     }
 
@@ -50,14 +49,6 @@ public class Customer {
         this.address = address;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -66,13 +57,12 @@ public class Customer {
         this.password = password;
     }
 
-    public Customer(int cusId, String cusName, String phoneNumber, String email, String address, String username, String password) {
+    public Customer(Long cusId, String cusName, String phoneNumber, String email, String address, String password) {
         this.cusId = cusId;
         this.cusName = cusName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
-        this.username = username;
         this.password = password;
     }
 }

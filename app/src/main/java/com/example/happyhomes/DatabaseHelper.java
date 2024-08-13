@@ -6,14 +6,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteException;
-import android.os.Environment;
 import android.util.Log;
 
 import com.example.happyhomes.Model.Check;
 import com.example.happyhomes.Model.Employee;
 import com.example.happyhomes.Model.Service;
-import com.example.happyhomes.Model.ServiceDetail;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

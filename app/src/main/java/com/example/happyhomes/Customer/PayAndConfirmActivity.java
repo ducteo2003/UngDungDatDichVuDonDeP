@@ -10,14 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhomes.DatabaseHelper;
 import com.example.happyhomes.Model.Schedule;
-import com.example.happyhomes.Model.ServiceDetail;
 import com.example.happyhomes.databinding.ActivityPayAndConfirmBinding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;

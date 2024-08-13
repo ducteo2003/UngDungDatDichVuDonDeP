@@ -1,26 +1,36 @@
 package com.example.happyhomes.Model;
 
 public class ServiceSchedule {
-    private int serviceId;
-    private int scheduleId;
+    private Long serScheId;
+    private Long serviceId;
+    private Long scheduleId;
 
-    public int getScheduleId() {
-        return scheduleId;
+    public Long getSerScheId() {
+        return serScheId;
     }
 
-    public void setScheduleId(int scheduleId) {
-        this.scheduleId = scheduleId;
+    public void setSerScheId(Long serScheId) {
+        this.serScheId = serScheId;
     }
 
-    public int getServiceId() {
+    public Long getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(int serviceId) {
+    public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
     }
 
-    public ServiceSchedule(int serviceId, int scheduleId) {
+    public Long getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(Long scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
+    public ServiceSchedule(Long serScheId, Long serviceId, Long scheduleId) {
+        this.serScheId = serScheId;
         this.serviceId = serviceId;
         this.scheduleId = scheduleId;
     }

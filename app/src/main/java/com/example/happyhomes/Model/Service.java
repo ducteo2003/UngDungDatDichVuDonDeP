@@ -3,15 +3,16 @@ package com.example.happyhomes.Model;
 import java.io.Serializable;
 
 public class Service  {
-    private int serviceId;
+    private Long serviceId;
     private String serviceType;
-    private double serviceCost;
+    private Double serviceCost;
+    private String serviceDescri;
 
-    public int getServiceId() {
+    public Long getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(int serviceId) {
+    public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
     }
 
@@ -23,17 +24,26 @@ public class Service  {
         this.serviceType = serviceType;
     }
 
-    public double getServiceCost() {
+    public Double getServiceCost() {
         return serviceCost;
     }
 
-    public void setServiceCost(double serviceCost) {
+    public void setServiceCost(Double serviceCost) {
         this.serviceCost = serviceCost;
     }
 
-    public Service(int serviceId, String serviceType, double serviceCost) {
+    public String getServiceDescri() {
+        return serviceDescri;
+    }
+
+    public void setServiceDescri(String serviceDescri) {
+        this.serviceDescri = serviceDescri;
+    }
+
+    public Service(Long serviceId, String serviceType, Double serviceCost, String serviceDescri) {
         this.serviceId = serviceId;
         this.serviceType = serviceType;
         this.serviceCost = serviceCost;
+        this.serviceDescri = serviceDescri;
     }
 }

@@ -1,60 +1,59 @@
 package com.example.happyhomes.Model;
 
+import java.sql.Date;
+
 public class Payment {
-    private int payId;
-    private int methodId;
-    private int cusId;
-    private int serviceId;
-    private String payDay;
+    private Long payId;
+    private Long methodId;
+    private Long serScheId;
+    private Long serviceId;
+    private Date payDay;
 
-
-    public int getPayId() {
+    public Long getPayId() {
         return payId;
     }
 
-    public void setPayId(int payId) {
+    public void setPayId(Long payId) {
         this.payId = payId;
     }
 
-    public int getMethodId() {
+    public Long getMethodId() {
         return methodId;
     }
 
-    public void setMethodId(int methodId) {
+    public void setMethodId(Long methodId) {
         this.methodId = methodId;
     }
 
-    public int getCusId() {
-        return cusId;
+    public Long getSerScheId() {
+        return serScheId;
     }
 
-    public void setCusId(int cusId) {
-        this.cusId = cusId;
+    public void setSerScheId(Long serScheId) {
+        this.serScheId = serScheId;
     }
 
-    public int getServiceId() {
+    public Long getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(int serviceId) {
+    public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
     }
 
-    public String getPayDay() {
+    public Date getPayDay() {
         return payDay;
     }
 
-    public void setPayDay(String payDay) {
+    public void setPayDay(Date payDay) {
         this.payDay = payDay;
     }
 
-
-    public Payment(int payId, int methodId, int cusId, int serviceId, String payDay) {
+    public Payment(Long payId, Long methodId, Long serScheId, Long serviceId, Date payDay) {
         this.payId = payId;
         this.methodId = methodId;
-        this.cusId = cusId;
+        this.serScheId = serScheId;
         this.serviceId = serviceId;
         this.payDay = payDay;
-
     }
 }

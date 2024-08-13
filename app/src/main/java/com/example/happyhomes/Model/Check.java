@@ -1,34 +1,36 @@
 package com.example.happyhomes.Model;
 
+import java.util.Date;
+
 public class Check {
-    private int checkId;
-    private int emId;
+    private Long checkId;
+    private Long workdateId;
     private byte[] checkPic;
-    private int checkType;
-    private String checkTime;
+    private Integer checkType;
+    private Date time;
 
-    public int getCheckId() {
-        return checkId;
+    public Long getWorkdateId() {
+        return workdateId;
     }
 
-    public void setCheckId(int checkId) {
-        this.checkId = checkId;
+    public void setWorkdateId(Long workdateId) {
+        this.workdateId = workdateId;
     }
 
-    public int getEmId() {
-        return emId;
+    public Date getTime() {
+        return time;
     }
 
-    public Check(int emId, byte[] checkPic, int checkType, String checkTime) {
-        this.emId = emId;
-        this.checkPic = checkPic;
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Integer getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(Integer checkType) {
         this.checkType = checkType;
-        this.checkTime = checkTime;
-    }
-
-
-    public void setEmId(int emId) {
-        this.emId = emId;
     }
 
     public byte[] getCheckPic() {
@@ -39,29 +41,19 @@ public class Check {
         this.checkPic = checkPic;
     }
 
-    public int getCheckType() {
-        return checkType;
+    public Long getCheckId() {
+        return checkId;
     }
 
-    public void setCheckType(int checkType) {
-        this.checkType = checkType;
-    }
-
-    public String getCheckTime() {
-        return checkTime;
-    }
-
-    public void setCheckTime(String checkTime) {
-        this.checkTime = checkTime;
-    }
-
-    //test
-    public Check(int checkId, int emId, byte[] checkPic, int checkType, String checkTime) {
+    public void setCheckId(Long checkId) {
         this.checkId = checkId;
-        this.emId = emId;
+    }
+
+    public Check(Long checkId, Long workdateId, byte[] checkPic, Integer checkType, Date time) {
+        this.checkId = checkId;
+        this.workdateId = workdateId;
         this.checkPic = checkPic;
         this.checkType = checkType;
-        this.checkTime = checkTime;
+        this.time = time;
     }
-
 }

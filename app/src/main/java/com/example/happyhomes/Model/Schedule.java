@@ -1,49 +1,46 @@
 package com.example.happyhomes.Model;
 
+import java.io.Serializable;
+import java.util.Date;
+
 public class Schedule {
-    private int scheduleId;
-    private String date;
-    private String startTime;
-    private String endTime;
+    private Long scheduleId;
+    private Long cusId;
+    private Date date;
+    private Date startTime;
     private String location;
     private String status;
-    private String createdAt;
-    private String updatedAt;
 
-    public Schedule() {
-
-    }
-
-    public int getScheduleId() {
+    public Long getScheduleId() {
         return scheduleId;
     }
 
-    public void setScheduleId(int scheduleId) {
+    public void setScheduleId(Long scheduleId) {
         this.scheduleId = scheduleId;
     }
 
-    public String getDate() {
+    public Long getCusId() {
+        return cusId;
+    }
+
+    public void setCusId(Long cusId) {
+        this.cusId = cusId;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
     }
 
     public String getLocation() {
@@ -62,30 +59,12 @@ public class Schedule {
         this.status = status;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Schedule(int scheduleId, String date, String startTime, String endTime, String location, String status, String createdAt, String updatedAt) {
+    public Schedule(Long scheduleId, Long cusId, Date date, Date startTime, String location, String status) {
         this.scheduleId = scheduleId;
+        this.cusId = cusId;
         this.date = date;
         this.startTime = startTime;
-        this.endTime = endTime;
         this.location = location;
         this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }
