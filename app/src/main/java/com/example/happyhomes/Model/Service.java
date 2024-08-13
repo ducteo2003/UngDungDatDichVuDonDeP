@@ -2,7 +2,7 @@ package com.example.happyhomes.Model;
 
 import java.io.Serializable;
 
-public class Service {
+public class Service  {
     private int serviceId;
     private String serviceType;
     private double serviceCost;

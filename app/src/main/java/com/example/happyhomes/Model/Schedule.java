@@ -10,6 +10,10 @@ public class Schedule {
     private String createdAt;
     private String updatedAt;
 
+    public Schedule() {
+
+    }
+
     public int getScheduleId() {
         return scheduleId;
     }
