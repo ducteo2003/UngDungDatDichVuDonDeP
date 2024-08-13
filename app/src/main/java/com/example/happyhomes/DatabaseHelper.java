@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SERVICE_ID = "SERVICEID";
     public static final String COLUMN_SERVICE_TYPE = "SERVICETYPE";
     public static final String COLUMN_SERVICE_COST = "SERVICECOST";
+    public static final String COLUMN_SERVICE_DECRI = "SERVICE_DECRI";
 
     public static final String TABLE_SERVICE_DETAIL = "SERVICE_DETAIL";
     public static final String COLUMN_CUS_ID = "CUSID";
@@ -40,14 +41,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public static final String TABLE_SCHEDULE = "SCHEDULE";
-    public static final String COLUMN_SCHEDULE_ID = "scheduleId";
+    public static final String COLUMN_SCHEDULE_ID = "SCHEDULEID";
+    public static final String COLUMN_SCHEDULE_CUSID = "CUSID";
     public static final String COLUMN_DATE = "DATE";
     public static final String COLUMN_START_TIME = "STARTTIME";
-    public static final String COLUMN_END_TIME = "ENDTIME";
     public static final String COLUMN_LOCATION = "LOCATION";
     public static final String COLUMN_STATUS = "STATUS";
-    public static final String COLUMN_CREATED_AT = "CREATED_AT";
-    public static final String COLUMN_UPDATED_AT = "UPDATED_AT";
 
 
     public DatabaseHelper(Context context) {
@@ -109,11 +108,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_SERVICE, null, null, null, null, null, null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                int serviceId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_ID));
+                long serviceId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_ID));
                 String serviceType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_TYPE));
-                double serviceCost = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_COST)); // Fetch the service cost
+                double serviceCost = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_COST));
+                String serviceDecri = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_DECRI));// Fetch the service cost
 
-                services.add(new Service(serviceId, serviceType, serviceCost)); // Pass the serviceCost to the Service constructor
+                services.add(new Service(serviceId, serviceType, serviceCost, serviceDecri)); // Pass the serviceCost to the Service constructor
             }
             cursor.close();
         }
