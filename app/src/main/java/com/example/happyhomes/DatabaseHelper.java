@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.happyhomes.Model.Schedule;
 import com.example.happyhomes.Model.Service;
 import com.example.happyhomes.Model.ServiceDetail;
 
@@ -38,6 +39,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SERVICE_ID_DETAIL = "SERVICEID";
     public static final String COLUMN_PAY_ID = "PAYID";
     public static final String COLUMN_NOTE = "NOTE";
+
+
+    public static final String TABLE_SCHEDULE = "SCHEDULE";
+    public static final String COLUMN_SCHEDULE_ID = "scheduleId";
+    public static final String COLUMN_DATE = "DATE";
+    public static final String COLUMN_START_TIME = "STARTTIME";
+    public static final String COLUMN_END_TIME = "ENDTIME";
+    public static final String COLUMN_LOCATION = "LOCATION";
+    public static final String COLUMN_STATUS = "STATUS";
+    public static final String COLUMN_CREATED_AT = "CREATED_AT";
+    public static final String COLUMN_UPDATED_AT = "UPDATED_AT";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -122,14 +135,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void addServiceDetail(ServiceDetail serviceDetail) {
         SQLiteDatabase db = this.openDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_CUS_ID, serviceDetail.getCusId());
         values.put(COLUMN_SERVICE_ID_DETAIL, serviceDetail.getServiceId());
         values.put(COLUMN_PAY_ID, serviceDetail.getPayId());
         values.put(COLUMN_NOTE, serviceDetail.getNote());
 
-        db.insert(TABLE_SERVICE_DETAIL, null, values);
+        long result = db.insert(TABLE_SERVICE_DETAIL, null, values);
+        if (result == -1) {
+            Log.e("DatabaseHelper", "Failed to insert ServiceDetail");
+        } else {
+            Log.i("DatabaseHelper", "ServiceDetail inserted successfully");
+        }
+        db.close();
+    }
+    public void addSchedule(Schedule schedule) {
+        SQLiteDatabase db = this.openDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_DATE, schedule.getDate());
+        values.put(COLUMN_START_TIME, schedule.getStartTime());
+        values.put(COLUMN_END_TIME, schedule.getEndTime());
+        values.put(COLUMN_LOCATION, schedule.getLocation());
+        values.put(COLUMN_STATUS, schedule.getStatus());
+        values.put(COLUMN_CREATED_AT, schedule.getCreatedAt());
+        values.put(COLUMN_UPDATED_AT, schedule.getUpdatedAt());
+
+        long result = db.insert(TABLE_SCHEDULE, null, values);
+        if (result == -1) {
+            Log.e("DatabaseHelper", "Failed to insert Schedule");
+        } else {
+            Log.i("DatabaseHelper", "Schedule inserted successfully");
+        }
         db.close();
     }
 }
