@@ -3,16 +3,16 @@ package com.example.happyhomes.Model;
 import java.io.Serializable;
 
 public class Employee implements Serializable {
-    private int emId;
+    private Long emId;
     private String emName;
     private String emEmail;
     private String password;
 
-    public int getEmId() {
+    public Long getEmId() {
         return emId;
     }
 
-    public void setEmId(int emId) {
+    public void setEmId(Long emId) {
         this.emId = emId;
     }
 
@@ -40,7 +40,7 @@ public class Employee implements Serializable {
         this.password = password;
     }
 
-    public Employee(int emId, String emName, String emEmail, String password) {
+    public Employee(Long emId, String emName, String emEmail, String password) {
         this.emId = emId;
         this.emName = emName;
         this.emEmail = emEmail;

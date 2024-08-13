@@ -1,27 +1,37 @@
 package com.example.happyhomes.Model;
 
 public class Workdate {
-    private int emId;
-    private int scheduleId;
+    private Long workDateId;
+    private Long emId;
+    private Long serScheId;
 
-    public Workdate(int emId, int scheduleId) {
-        this.emId = emId;
-        this.scheduleId = scheduleId;
+    public Long getWorkDateId() {
+        return workDateId;
     }
 
-    public int getEmId() {
+    public void setWorkDateId(Long workDateId) {
+        this.workDateId = workDateId;
+    }
+
+    public Long getEmId() {
         return emId;
     }
 
-    public void setEmId(int emId) {
+    public void setEmId(Long emId) {
         this.emId = emId;
     }
 
-    public int getScheduleId() {
-        return scheduleId;
+    public Long getSerScheId() {
+        return serScheId;
     }
 
-    public void setScheduleId(int scheduleId) {
-        this.scheduleId = scheduleId;
+    public void setSerScheId(Long serScheId) {
+        this.serScheId = serScheId;
+    }
+
+    public Workdate(Long workDateId, Long emId, Long serScheId) {
+        this.workDateId = workDateId;
+        this.emId = emId;
+        this.serScheId = serScheId;
     }
 }

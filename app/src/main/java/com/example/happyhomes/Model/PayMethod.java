@@ -1,14 +1,14 @@
 package com.example.happyhomes.Model;
 
 public class PayMethod {
-    private int methodId;
+    private Long methodId;
     private String method;
 
-    public int getMethodId() {
+    public Long getMethodId() {
         return methodId;
     }
 
-    public void setMethodId(int methodId) {
+    public void setMethodId(Long methodId) {
         this.methodId = methodId;
     }
 
@@ -20,7 +20,7 @@ public class PayMethod {
         this.method = method;
     }
 
-    public PayMethod(int methodId, String method) {
+    public PayMethod(Long methodId, String method) {
         this.methodId = methodId;
         this.method = method;
     }
