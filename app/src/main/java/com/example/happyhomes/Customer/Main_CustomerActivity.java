@@ -38,6 +38,5 @@ public class Main_CustomerActivity extends AppCompatActivity {
                 cusID = cusId;
             }
         }
-
     }
 }

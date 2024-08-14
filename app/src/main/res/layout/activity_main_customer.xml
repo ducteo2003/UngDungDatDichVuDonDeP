@@ -75,18 +75,10 @@
             android:orientation="vertical"
             android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Services"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:layout_marginStart="20dp" />
-
-            <ListView
-                android:id="@+id/lvService"
-                android:layout_width="match_parent"
-                android:layout_height="420dp" />
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:src=""
         </LinearLayout>
     </LinearLayout>
 
