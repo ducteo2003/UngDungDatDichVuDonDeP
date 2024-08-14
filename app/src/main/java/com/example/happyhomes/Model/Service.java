@@ -6,7 +6,7 @@ public class Service  {
     private Long serviceId;
     private String serviceType;
     private Double serviceCost;
-    private String serviceDescri;
+
 
     public Long getServiceId() {
         return serviceId;
@@ -32,18 +32,13 @@ public class Service  {
         this.serviceCost = serviceCost;
     }
 
-    public String getServiceDescri() {
-        return serviceDescri;
-    }
 
-    public void setServiceDescri(String serviceDescri) {
-        this.serviceDescri = serviceDescri;
-    }
 
-    public Service(Long serviceId, String serviceType, Double serviceCost, String serviceDescri) {
+
+    public Service(Long serviceId, String serviceType, Double serviceCost) {
         this.serviceId = serviceId;
         this.serviceType = serviceType;
         this.serviceCost = serviceCost;
-        this.serviceDescri = serviceDescri;
+
     }
 }

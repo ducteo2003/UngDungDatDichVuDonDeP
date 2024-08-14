@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhomes.DatabaseHelper;
 import com.example.happyhomes.Model.Schedule;
+import com.example.happyhomes.Model.ServiceSchedule;
 import com.example.happyhomes.databinding.ActivityPayAndConfirmBinding;
 
 import java.text.ParseException;
@@ -28,13 +29,13 @@ public class PayAndConfirmActivity extends AppCompatActivity {
         binding = ActivityPayAndConfirmBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Khởi tạo databaseHelper
+        // Initialize DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
-        // Tải dữ liệu từ intent và hiển thị trên giao diện
+        // Load data from the intent and display on the UI
         loadData();
 
-        // Xử lý sự kiện khi nhấn nút Post Job
+        // Handle the event when the Post Job button is pressed
         binding.btnPostJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,81 +45,74 @@ public class PayAndConfirmActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        // Lấy dữ liệu từ intent và hiển thị trên các TextView
+        // Get data from the intent and display on the TextViews
         Intent intent = getIntent();
         if (intent != null) {
             String selectedDate = intent.getStringExtra("selectedDate");
             String selectedHour = intent.getStringExtra("selectedHour");
             String additionalRequest = intent.getStringExtra("additionalRequest");
+            String adress = intent.getStringExtra("adress");
             binding.txtDate.setText(selectedDate);
             binding.txtTime.setText(selectedHour);
             binding.txtNote.setText(additionalRequest);
+            binding.locationtext.setText(adress);
         } else {
             Toast.makeText(this, "Error: No data received.", Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void saveJobToDatabase() {
-        // Lấy dữ liệu từ intent và các view
         Intent intent = getIntent();
-        int serviceId = intent.getIntExtra("selectedServiceId", -1); // -1 nếu không tìm thấy
-        int cusId = 3; // Giả sử một customer ID (thay thế bằng logic thực tế)
-        int payId = 2; // Giả sử một payment ID (thay thế bằng logic thực tế)
+        int serviceId = intent.getIntExtra("selectedServiceId", -1);
+        int cusId = 3;
         String note = binding.txtNote.getText().toString();
-        String selectedDate = binding.txtDate.getText().toString();
-        String selectedHour = binding.txtTime.getText().toString();
-        // Đảm bảo rằng serviceId hợp lệ
+        String selectedDate = binding.txtDate.getText().toString(); // Expecting format "yyyy-MM-dd"
+        String selectedHour = binding.txtTime.getText().toString(); // Expecting format "HH:mm:ss"
+
         if (serviceId == -1) {
             Toast.makeText(this, "Error: Service not selected.", Toast.LENGTH_LONG).show();
             return;
         }
-            ServiceDetail serviceDetail = new ServiceDetail(cusId, serviceId, payId, note);
-        // Tạo đối tượng Schedule
-        Schedule schedule = new Schedule();
-        schedule.setDate(selectedDate);
-        schedule.setStartTime(selectedHour);
-        // Xử lý thời gian bắt đầu và kết thúc
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Calendar startCalendar = Calendar.getInstance();
+
+        // Convert String to Date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()); // Ensure this format matches the date string
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault()); // Updated format to match "04:48"
+
         try {
-            startCalendar.setTime(sdf.parse(selectedDate + " " + selectedHour));
+            Date date = dateFormat.parse(selectedDate);
+            // Handle the case where the time might not include seconds
+            Date startTime = timeFormat.parse(selectedHour);
+
+            Schedule schedule = new Schedule(
+                    null,
+                    (long) cusId,
+                    date,
+                    startTime,
+                    binding.locationtext.getText().toString(),
+                    "Đang chờ"
+            );
+
+            // Save the schedule to the database
+            long scheduleId = databaseHelper.addSchedule(schedule);
+            if (scheduleId != -1) {
+                ServiceSchedule serviceSchedule = new ServiceSchedule(
+                        null,
+                        (long) serviceId,
+                        scheduleId
+                );
+                databaseHelper.addServiceSchedule(serviceSchedule);
+
+                Toast.makeText(this, "Job posted successfully!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Failed to save job.", Toast.LENGTH_LONG).show();
+            }
         } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        // Xác định số giờ để thêm vào
-        int hoursToAdd;
-        switch (serviceId) {
-            case 1:
-                hoursToAdd = 2;
-                break;
-            case 2:
-                hoursToAdd = 3;
-                break;
-            case 3:
-                hoursToAdd = 4;
-                break;
-            default:
-                hoursToAdd = 0;
-                break;
-        }
-        // Tính toán endTime
-        startCalendar.add(Calendar.HOUR_OF_DAY, hoursToAdd);
-        String endTime = sdf.format(startCalendar.getTime());
-        schedule.setEndTime(endTime);
-        schedule.setLocation("Location"); // Thay thế bằng thông tin vị trí thực tế
-        schedule.setStatus("Pending"); // Hoặc trạng thái thực tế
-        // Lấy ngày giờ hiện tại
-        String currentDateTime = sdf.format(new Date());
-        schedule.setCreatedAt(currentDateTime);
-        schedule.setUpdatedAt(currentDateTime);
-        try {
-            databaseHelper.addServiceDetail(serviceDetail);
-            databaseHelper.addSchedule(schedule);
-            Toast.makeText(this, "Job posted successfully!", Toast.LENGTH_LONG).show();
+            Log.e("PayAndConfirmActivity", "Error parsing date or hour", e);
+            Toast.makeText(this, "Failed to post job", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e("PayAndConfirmActivity", "Error saving job to database", e);
             Toast.makeText(this, "Failed to post job", Toast.LENGTH_LONG).show();
         }
+
     }
 }

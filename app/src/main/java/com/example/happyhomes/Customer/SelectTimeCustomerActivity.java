@@ -4,8 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,35 +16,34 @@ import java.util.Calendar;
 
 public class SelectTimeCustomerActivity extends AppCompatActivity {
 
-    ActivitySelectTimeCustomerBinding binding;
+    private ActivitySelectTimeCustomerBinding binding;
+    private int selectedServiceId;
+    private double slectedServiceCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySelectTimeCustomerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        // Retrieve data from Intent
 
+        // Log to verify date and time picker setup
+        Log.d("SelectTimeCustomer", "Setting up Date and Time Pickers");
         // Set up date and time pickers
         setupDatePicker();
         setupTimePicker();
-        addEvents();
-    }
-
-    private void addEvents() {
-        // When "Next" button is clicked
+        // Set up the Next button click listener
         binding.btnNext.setOnClickListener(view -> {
-            TextView dateTextView = binding.dateTextView;
-            TextView hourPicker = binding.hourPicker;
-            EditText additionalRequestEditText = binding.edtNote; // Assuming the EditText ID is "edtNote"
-
-            // Retrieve service ID from the incoming Intent
-            Intent incomingIntent = getIntent();
-            int selectedServiceId = incomingIntent.getIntExtra("selectedServiceId", -1);
-
             // Retrieve values from the views
-            String selectedDate = dateTextView.getText().toString();
-            String selectedHour = hourPicker.getText().toString();
-            String additionalRequest = additionalRequestEditText.getText().toString();
+            String selectedDate = binding.dateTextView.getText().toString();
+            String selectedHour = binding.hourPicker.getText().toString();
+            String additionalRequest = binding.edtNote.getText().toString();
+
+            // Log the values being sent to PayAndConfirmActivity
+            Log.d("SelectTimeCustomer", "Next button clicked");
+            Log.d("SelectTimeCustomer", "Selected Date: " + selectedDate);
+            Log.d("SelectTimeCustomer", "Selected Hour: " + selectedHour);
+            Log.d("SelectTimeCustomer", "Additional Request: " + additionalRequest);
 
             // Create an Intent to start PayAndConfirmActivity
             Intent payAndConfirmIntent = new Intent(SelectTimeCustomerActivity.this, PayAndConfirmActivity.class);
@@ -54,12 +53,33 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
             payAndConfirmIntent.putExtra("selectedDate", selectedDate);
             payAndConfirmIntent.putExtra("selectedHour", selectedHour);
             payAndConfirmIntent.putExtra("additionalRequest", additionalRequest);
-
+            payAndConfirmIntent.putExtra("adress",binding.address.getText().toString());
             // Start the PayAndConfirmActivity
             startActivity(payAndConfirmIntent);
         });
+      loadData();
     }
 
+    private void loadData() {
+        try {
+            Intent incomingIntent = getIntent();
+            selectedServiceId = incomingIntent.getIntExtra("selectedServiceId", -1);
+            slectedServiceCode = incomingIntent.getDoubleExtra("selectedServiceCost", 0.0);
+            String selectedAdress= incomingIntent.getStringExtra("adress");
+            binding.txtCost.setText(String.format("%.0f VND", slectedServiceCode));
+            binding.address.setText(selectedAdress);
+            // Log to check the value of selectedServiceId
+            Log.d("SelectTimeCustomer", "Received Service ID: " + selectedServiceId);
+
+        } catch (Exception e) {
+            // Log error and show a toast
+            Log.e("SelectTimeCustomer", "Error retrieving selected service ID", e);
+            Toast.makeText(this, "An error occurred while retrieving the service ID.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    // Date and Time Picker methods remain the same...
     private void setupDatePicker() {
         binding.dateButton.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
@@ -70,7 +90,7 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
                     (view, selectedYear, selectedMonth, selectedDay) -> {
-                        String date = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                        String date = + selectedYear + "/" + (selectedMonth + 1) + "/" + selectedDay;
                         binding.dateTextView.setText(date);
                     },
                     year, month, day

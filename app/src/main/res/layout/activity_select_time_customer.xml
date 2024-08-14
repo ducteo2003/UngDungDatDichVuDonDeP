@@ -38,7 +38,31 @@
                 android:layout_marginStart="16dp"
                 android:textColor="@android:color/black" />
         </LinearLayout>
+        <!-- Address Section -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:paddingBottom="16dp">
 
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerHorizontal="true"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/dropdownIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp"
+                android:src="@drawable/baseline_location_pin_24" />
+        </RelativeLayout>
         <!-- Time Selection -->
         <TextView
             android:layout_width="wrap_content"
@@ -66,8 +90,8 @@
                 android:id="@+id/date_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tháng 8/2024"
-                android:textSize="16sp"
+                android:text=""
+                android:textSize="20sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_gravity="end"
                 android:layout_marginStart="10dp" />
@@ -89,22 +113,14 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_margin="4dp"
-                android:background="@drawable/date_button_background">
+                android:background="#21B1F3">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CHỌN NGÀY"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_gravity="center" />
             </LinearLayout>
@@ -120,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/time_picker_background"
             android:padding="12dp">
 
@@ -135,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chọn giờ làm"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:layout_marginStart="16dp"
                 android:textColor="@android:color/black" />
 
@@ -152,8 +168,8 @@
                     android:id="@+id/hour_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="14"
-                    android:textSize="16sp"
+                    android:text=""
+                    android:textSize="20sp"
                     android:textColor="@android:color/black"
                     android:layout_marginEnd="4dp" />
 
@@ -163,15 +179,6 @@
                     android:text=":"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/minute_picker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="4dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -223,9 +230,10 @@
         android:gravity="center_vertical"
         android:background="#4CAF50"
         android:padding="16dp"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="75dp">
 
         <TextView
+            android:id="@+id/txtCost"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -233,7 +241,6 @@
             android:textSize="18sp"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
-
         <Button
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
@@ -243,5 +250,4 @@
             android:textSize="18sp"
             android:background="@android:color/transparent" />
     </LinearLayout>
-
 </LinearLayout>

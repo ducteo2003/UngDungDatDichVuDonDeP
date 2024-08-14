@@ -91,15 +91,63 @@
             android:buttonTint="@color/black"
             android:background="?attr/selectableItemBackground"
             android:drawablePadding="8dp" />
+        <RadioButton
+            android:id="@+id/radioFiveHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp" />
+        <RadioButton
+            android:id="@+id/radioSixHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp" />
+        <RadioButton
+            android:id="@+id/radioSevenHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:buttonTint="@color/black"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp" />
     </RadioGroup>
-
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_gravity="center"
-        android:text="Tiếp theo"
-        android:backgroundTint="#2196F3"
-        android:textColor="@android:color/white" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#4CAF50"
+        android:padding="16dp"
+        android:layout_marginTop="80dp">
+
+        <TextView
+            android:id="@+id/txtMoney"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="216,000 VND/2h"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiếp theo"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
+
 </LinearLayout>
