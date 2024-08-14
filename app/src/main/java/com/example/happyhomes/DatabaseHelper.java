@@ -10,44 +10,51 @@ import android.util.Log;
 
 import com.example.happyhomes.Model.Check;
 import com.example.happyhomes.Model.Employee;
+import com.example.happyhomes.Model.Schedule;
 import com.example.happyhomes.Model.Service;
+import com.example.happyhomes.Model.ServiceSchedule;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+
     private static final String DATABASE_NAME = "data_app_cleaning.db";
     private static final int DATABASE_VERSION = 1;
-    private static String DATABASE_PATH;
+    private static  String DATABASE_PATH;
     private final Context context;
+    // Table names
+    private static final String TABLE_SERVICE = "SERVICE";
+    private static final String TABLE_SCHEDULE = "SCHEDULE";
+    private static final String TABLE_SERVICE_SCHEDULE = "SERVICE_SCHEDULE";
 
-    public static final String TABLE_SERVICE = "SERVICE";
-    public static final String COLUMN_SERVICE_ID = "SERVICEID";
-    public static final String COLUMN_SERVICE_TYPE = "SERVICETYPE";
-    public static final String COLUMN_SERVICE_COST = "SERVICECOST";
-    public static final String COLUMN_SERVICE_DECRI = "SERVICE_DECRI";
-
-    public static final String TABLE_SERVICE_DETAIL = "SERVICE_DETAIL";
-    public static final String COLUMN_CUS_ID = "CUSID";
-    public static final String COLUMN_SERVICE_ID_DETAIL = "SERVICEID";
-    public static final String COLUMN_PAY_ID = "PAYID";
-    public static final String COLUMN_NOTE = "NOTE";
+    // SERVICE Table columns
+    private static final String COLUMN_SERVICE_ID = "SERVICEID";
+    private static final String COLUMN_SERVICE_TYPE = "SERVICETYPE";
+    private static final String COLUMN_SERVICE_COST = "SERVICECOST";
 
 
-    public static final String TABLE_SCHEDULE = "SCHEDULE";
-    public static final String COLUMN_SCHEDULE_ID = "SCHEDULEID";
-    public static final String COLUMN_SCHEDULE_CUSID = "CUSID";
-    public static final String COLUMN_DATE = "DATE";
-    public static final String COLUMN_START_TIME = "STARTTIME";
-    public static final String COLUMN_LOCATION = "LOCATION";
-    public static final String COLUMN_STATUS = "STATUS";
+    // SCHEDULE Table columns
+    private static final String COLUMN_SCHEDULE_ID = "SCHEDULEID";
+    private static final String COLUMN_CUS_ID = "CUSID";
+    private static final String COLUMN_DATE = "DATE";
+    private static final String COLUMN_START_TIME = "STARTTIME";
+    private static final String COLUMN_LOCATION = "LOCATION";
+    private static final String COLUMN_STATUS = "STATUS";
 
+    // SERVICE_SCHEDULE Table columns
+    private static final String COLUMN_SER_SCHE_ID = "SER_SCHE_ID";
+    private static final String COLUMN_SERVICE_ID_FK = "SERVICEID";
+    private static final String COLUMN_SCHEDULE_ID_FK = "SCHEDULEID";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -101,151 +108,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
-    public List<Service> getAllServices() {
-        List<Service> services = new ArrayList<>();
-        SQLiteDatabase db = this.openDatabase();
-
-        Cursor cursor = db.query(TABLE_SERVICE, null, null, null, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                long serviceId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_ID));
-                String serviceType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_TYPE));
-                double serviceCost = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_COST));
-                String serviceDecri = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_DECRI));// Fetch the service cost
-
-                services.add(new Service(serviceId, serviceType, serviceCost, serviceDecri)); // Pass the serviceCost to the Service constructor
-            }
-            cursor.close();
-        }
-        return services;
-    }
-
-    // Update the addService method to include serviceCost
-    public void addService(int serviceId, String serviceType, double serviceCost) {
-        SQLiteDatabase db = this.openDatabase();
+    // Add new Service
+    public void addService(Service service) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_SERVICE_ID, serviceId);
-        values.put(COLUMN_SERVICE_TYPE, serviceType);
-        values.put(COLUMN_SERVICE_COST, serviceCost); // Add serviceCost here
+        values.put(COLUMN_SERVICE_ID, service.getServiceId());
+        values.put(COLUMN_SERVICE_TYPE, service.getServiceType());
+        values.put(COLUMN_SERVICE_COST, service.getServiceCost());
         db.insert(TABLE_SERVICE, null, values);
         db.close();
     }
+    // Get all Services
+    public List<Service> getAllServices() {
+        List<Service> serviceList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SERVICE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-    public void addServiceDetail(ServiceDetail serviceDetail) {
-        SQLiteDatabase db = this.openDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CUS_ID, serviceDetail.getCusId());
-        values.put(COLUMN_SERVICE_ID_DETAIL, serviceDetail.getServiceId());
-        values.put(COLUMN_PAY_ID, serviceDetail.getPayId());
-        values.put(COLUMN_NOTE, serviceDetail.getNote());
+        if (cursor.moveToFirst()) {
+            do {
+                Service service = new Service(
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_TYPE)),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_COST))
 
-        long result = db.insert(TABLE_SERVICE_DETAIL, null, values);
-        if (result == -1) {
-            Log.e("DatabaseHelper", "Failed to insert ServiceDetail");
-        } else {
-            Log.i("DatabaseHelper", "ServiceDetail inserted successfully");
+                );
+                serviceList.add(service);
+            } while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
+        return serviceList;
     }
-    public void addSchedule(Schedule schedule) {
-        SQLiteDatabase db = this.openDatabase();
-        ContentValues values = new ContentValues();
 
-        values.put(COLUMN_DATE, schedule.getDate());
-        values.put(COLUMN_START_TIME, schedule.getStartTime());
-        values.put(COLUMN_END_TIME, schedule.getEndTime());
+    // Add new Schedule
+    public long addSchedule(Schedule schedule) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CUS_ID, schedule.getCusId());
+        values.put(COLUMN_DATE, schedule.getDateString()); // Convert Date to String
+        values.put(COLUMN_START_TIME, schedule.getStartTimeString()); // Convert Time to String
         values.put(COLUMN_LOCATION, schedule.getLocation());
         values.put(COLUMN_STATUS, schedule.getStatus());
-        values.put(COLUMN_CREATED_AT, schedule.getCreatedAt());
-        values.put(COLUMN_UPDATED_AT, schedule.getUpdatedAt());
 
         long result = db.insert(TABLE_SCHEDULE, null, values);
-        if (result == -1) {
-            Log.e("DatabaseHelper", "Failed to insert Schedule");
-        } else {
-            Log.i("DatabaseHelper", "Schedule inserted successfully");
-        }
         db.close();
+        return result;
     }
 
-    public static final String TABLE_CHECK = "'CHECK'";
-    public static final String COLUMN_CHECK_ID = "CHECKID";
-    public static final String COLUMN_EMPLOYEE_ID = "EMID";
-    public static final String COLUMN_CHECK_PIC = "CHECKPIC";
-    public static final String COLUMN_CHECK_TYPE = "CHECKTYPE";
-    public static final String COLUMN_CHECK_TIME = "TIME";
-
-
-    // Method to add a check record
-    public void addCheck(Check check) {
-        SQLiteDatabase db = this.openDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_EMPLOYEE_ID, check.getEmId());
-        values.put(COLUMN_CHECK_PIC, check.getCheckPic());
-        values.put(COLUMN_CHECK_TYPE, check.getCheckType());
-        values.put(COLUMN_CHECK_TIME, check.getCheckTime());
-
-        // Thêm log để kiểm tra nội dung của ContentValues
-        Log.d("DatabaseHelper", "Inserting Check - Values: " + values.toString());
-
-        long result = db.insert(TABLE_CHECK, null, values);
-        // Kiểm tra kết quả chèn dữ liệu
-        if (result == -1) {
-            Log.e("DatabaseHelper", "Failed to insert Check.");
-        } else {
-            Log.d("DatabaseHelper", "Check inserted successfully with ID: " + result);
-        }
-        db.close();
-    }
-
-    //get duu lieu dua tren EMID
-    public Employee getEmployeeById(int employeeId) {
+    // Get all Schedules
+    public List<Schedule> getAllSchedules() {
+        List<Schedule> scheduleList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SCHEDULE;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("EMPLOYEE",
-                new String[]{"EMID", "EMNAME", "EMEMAIL"},  // Đúng tên cột
-                "EMID = ?",
-                new String[]{String.valueOf(employeeId)},
-                null, null, null, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
-            Employee employee = new Employee(
-                    cursor.getInt(cursor.getColumnIndexOrThrow("EMID")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("EMNAME")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("EMEMAIL")),
-                    null
-            );
-            cursor.close();
-            return employee;
-        } else {
-            return null;
+        if (cursor.moveToFirst()) {
+            do {
+                Schedule schedule = new Schedule(
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
+                        new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE))),
+                        new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_START_TIME))),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                );
+                scheduleList.add(schedule);
+            } while (cursor.moveToNext());
         }
-
-    }
-
-
-    public List<Check> getAllChecks() {
-        List<Check> checks = new ArrayList<>();
-        SQLiteDatabase db = this.openDatabase();
-
-        Cursor cursor = db.query(TABLE_CHECK, null, null, null, null, null, null);
-
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                int checkId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CHECK_ID));
-                int emId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EMPLOYEE_ID));
-                byte[] checkPic = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_CHECK_PIC));
-                int checkType = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CHECK_TYPE));
-                String checkTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CHECK_TIME));
-
-                checks.add(new Check(checkId, emId, checkPic, checkType, checkTime));
-            }
-            cursor.close();
-        }
-
+        cursor.close();
         db.close();
-        return checks;
+        return scheduleList;
     }
 
+    // Add new ServiceSchedule
+    public void addServiceSchedule(ServiceSchedule serviceSchedule) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_SERVICE_ID_FK, serviceSchedule.getServiceId());
+        values.put(COLUMN_SCHEDULE_ID_FK, serviceSchedule.getScheduleId());
+        db.insert(TABLE_SERVICE_SCHEDULE, null, values);
+        db.close();
+    }
+    public List<ServiceSchedule> getAllServiceSchedules() {
+        List<ServiceSchedule> serviceScheduleList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SERVICE_SCHEDULE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                ServiceSchedule serviceSchedule = new ServiceSchedule(
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SER_SCHE_ID)),
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_ID_FK)),
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID_FK))
+                );
+                serviceScheduleList.add(serviceSchedule);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return serviceScheduleList;
+    }
 
 }

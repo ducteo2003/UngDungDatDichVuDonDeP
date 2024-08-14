@@ -45,12 +45,12 @@ public class ServiceActivity extends AppCompatActivity {
         } else {
             binding.address.setText("No address selected");
         }
+
         // Load services from database and display them in RadioButtons
         loadServicesIntoRadioButtons();
         addEvents();
     }
 
-    //load radiobtn service
     private void loadServicesIntoRadioButtons() {
         try {
             databaseHelper.openDatabase();
@@ -70,50 +70,112 @@ public class ServiceActivity extends AppCompatActivity {
         }
 
         if (serviceList.size() > 0) {
-            String serviceInfo = serviceList.get(0).getServiceType() + " - " + serviceList.get(0).getServiceCost() + "VND";
+            String serviceInfo = serviceList.get(0).getServiceType();
             binding.radioTwoHours.setText(serviceInfo);
             Log.d(TAG, "Setting text for radioTwoHours: " + serviceInfo);
         }
         if (serviceList.size() > 1) {
-            String serviceInfo = serviceList.get(1).getServiceType() + " - " + serviceList.get(1).getServiceCost() + "VND";
+            String serviceInfo = serviceList.get(1).getServiceType() ;
             binding.radioThreeHours.setText(serviceInfo);
             Log.d(TAG, "Setting text for radioThreeHours: " + serviceInfo);
         }
         if (serviceList.size() > 2) {
-            String serviceInfo = serviceList.get(2).getServiceType() + " - " + serviceList.get(2).getServiceCost() + "VND";
+            String serviceInfo = serviceList.get(2).getServiceType();
             binding.radioFourHours.setText(serviceInfo);
             Log.d(TAG, "Setting text for radioFourHours: " + serviceInfo);
         }
+        if (serviceList.size() > 3) {
+            String serviceInfo = serviceList.get(3).getServiceType() ;
+            binding.radioFiveHours.setText(serviceInfo);
+            Log.d(TAG, "Setting text for radioFiveHours: " + serviceInfo);
+        }
+        if (serviceList.size() > 4) {
+            String serviceInfo = serviceList.get(4).getServiceType() ;
+            binding.radioSixHours.setText(serviceInfo);
+            Log.d(TAG, "Setting text for radioSixHours: " + serviceInfo);
+        }
+        if (serviceList.size() > 5) {
+            String serviceInfo = serviceList.get(5).getServiceType() ;
+            binding.radioSevenHours.setText(serviceInfo);
+            Log.d(TAG, "Setting text for radioSevenHours: " + serviceInfo);
+        }
 
-        binding.radioFourHours.setChecked(true);
-        Log.d(TAG, "RadioFourHours set to checked.");
+        // Automatically select the first RadioButton as checked
+        binding.radioTwoHours.setChecked(true);
+        updateTxtMoney(0);  // Update txtMoney with the initial service cost
+        Log.d(TAG, "RadioTwoHours set to checked.");
     }
 
-    //chuyen tiep man hinh
     private void addEvents() {
+        binding.durationRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            int selectedIndex = -1;
+            if (checkedId == R.id.radioTwoHours) {
+                selectedIndex = 0;
+            } else if (checkedId == R.id.radioThreeHours) {
+                selectedIndex = 1;
+            } else if (checkedId == R.id.radioFourHours) {
+                selectedIndex = 2;
+            } else if (checkedId == R.id.radioFiveHours) {
+                selectedIndex = 3;
+            } else if (checkedId == R.id.radioSixHours) {
+                selectedIndex = 4;
+            } else if (checkedId == R.id.radioSevenHours) {
+                selectedIndex = 5;
+            }
+
+            if (selectedIndex != -1) {
+                updateTxtMoney(selectedIndex);
+            }
+        });
+
         binding.nextButton.setOnClickListener(v -> {
             Intent selectTimeIntent = new Intent(ServiceActivity.this, SelectTimeCustomerActivity.class);
 
             String selectedServiceType = "";
             int selectedServiceId = -1;  // Default value if no service is selected
+            double selectedServiceCost = 0; // Initialize selectedServiceCost
 
             if (binding.radioTwoHours.isChecked()) {
                 selectedServiceType = binding.radioTwoHours.getText().toString();
-                selectedServiceId = serviceList.get(0).getServiceId();
+                selectedServiceId = serviceList.get(0).getServiceId().intValue();
+                selectedServiceCost = serviceList.get(0).getServiceCost();
             } else if (binding.radioThreeHours.isChecked()) {
                 selectedServiceType = binding.radioThreeHours.getText().toString();
-                selectedServiceId = serviceList.get(1).getServiceId();
+                selectedServiceId = serviceList.get(1).getServiceId().intValue();
+                selectedServiceCost = serviceList.get(1).getServiceCost();
             } else if (binding.radioFourHours.isChecked()) {
                 selectedServiceType = binding.radioFourHours.getText().toString();
-                selectedServiceId = serviceList.get(2).getServiceId();
+                selectedServiceId = serviceList.get(2).getServiceId().intValue();
+                selectedServiceCost = serviceList.get(2).getServiceCost();
+            } else if (binding.radioFiveHours.isChecked()) {
+                selectedServiceType = binding.radioFiveHours.getText().toString();
+                selectedServiceId = serviceList.get(3).getServiceId().intValue();
+                selectedServiceCost = serviceList.get(3).getServiceCost();
+            } else if (binding.radioSixHours.isChecked()) {
+                selectedServiceType = binding.radioSixHours.getText().toString();
+                selectedServiceId = serviceList.get(4).getServiceId().intValue();
+                selectedServiceCost = serviceList.get(4).getServiceCost();
+            } else if (binding.radioSevenHours.isChecked()) {
+                selectedServiceType = binding.radioSevenHours.getText().toString();
+                selectedServiceId = serviceList.get(5).getServiceId().intValue();
+                selectedServiceCost = serviceList.get(5).getServiceCost();
             }
 
-            // Pass the selected service type and serviceId to the next activity
+            // Pass the selected service type, serviceId, and serviceCost to the next activity
             selectTimeIntent.putExtra("selectedServiceType", selectedServiceType);
             selectTimeIntent.putExtra("selectedServiceId", selectedServiceId);
+            selectTimeIntent.putExtra("selectedServiceCost", selectedServiceCost);
+            selectTimeIntent.putExtra("adress", binding.address.getText());
             startActivity(selectTimeIntent);
         });
+    }
 
+
+    private void updateTxtMoney(int index) {
+        if (serviceList != null && !serviceList.isEmpty() && index >= 0 && index < serviceList.size()) {
+            String moneyText = serviceList.get(index).getServiceCost() + " VND/" + serviceList.get(index).getServiceType();
+            binding.txtMoney.setText(moneyText);
+            Log.d(TAG, "txtMoney updated: " + moneyText);
+        }
     }
 }
-

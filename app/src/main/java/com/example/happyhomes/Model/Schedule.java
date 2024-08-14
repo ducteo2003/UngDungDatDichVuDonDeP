@@ -1,7 +1,8 @@
 package com.example.happyhomes.Model;
 
-import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Schedule {
     private Long scheduleId;
@@ -10,7 +11,18 @@ public class Schedule {
     private Date startTime;
     private String location;
     private String status;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
+    public Schedule() {
+    }
+    public String getDateString() {
+        return dateFormat.format(date);
+    }
+
+    public String getStartTimeString() {
+        return timeFormat.format(startTime);
+    }
     public Long getScheduleId() {
         return scheduleId;
     }
@@ -27,16 +39,8 @@ public class Schedule {
         this.cusId = cusId;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Date getStartTime() {
-        return startTime;
     }
 
     public void setStartTime(Date startTime) {
