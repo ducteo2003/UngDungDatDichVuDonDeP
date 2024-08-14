@@ -71,4 +71,28 @@ public class Schedule {
         this.location = location;
         this.status = status;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public SimpleDateFormat getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(SimpleDateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    public SimpleDateFormat getTimeFormat() {
+        return timeFormat;
+    }
+
+    public void setTimeFormat(SimpleDateFormat timeFormat) {
+        this.timeFormat = timeFormat;
+    }
 }

@@ -16,9 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyHomes"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".NhanVien.HoSoNVActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".NhanVien.HoSoNVActivity"
+            android:exported="false" />
         <activity
             android:name=".NhanVien.HoTroActivity"
             android:exported="false" />
@@ -43,9 +43,9 @@
 <!--        <activity-->
 <!--            android:name=".Customer.SelectTimeCustomerActivity"-->
 <!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".NhanVien.NhanVienActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".NhanVien.NhanVienActivity"
+            android:exported="false" />
         <activity
             android:name=".NhanVien.bottom_dialog"
             android:exported="false" />
@@ -58,17 +58,22 @@
 <!--        <activity-->
 <!--            android:name=".Customer.MapCustomerActivity"-->
 <!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".RegisterActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
         <activity
             android:name=".Customer.SelectTimeCustomerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Customer.MapCustomerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Customer.MapCustomerActivity"
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/MapTheme">
             <intent-filter>

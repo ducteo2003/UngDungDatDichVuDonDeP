@@ -6,13 +6,13 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.example.happyhomes.Model.Check;
+import com.example.happyhomes.Model.Check_Work;
 import com.example.happyhomes.Model.Employee;
 import com.example.happyhomes.Model.Schedule;
 import com.example.happyhomes.Model.Service;
 import com.example.happyhomes.Model.ServiceSchedule;
+import com.example.happyhomes.Model.Workdate;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,6 +55,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SER_SCHE_ID = "SER_SCHE_ID";
     private static final String COLUMN_SERVICE_ID_FK = "SERVICEID";
     private static final String COLUMN_SCHEDULE_ID_FK = "SCHEDULEID";
+
+    // Tên bảng và cột cho bảng Check_Work
+    private static final String TABLE_CHECK_WORK = "CHECK_WORK";
+    private static final String COLUMN_WORKDATE_ID = "WORKDATEID";
+    private static final String COLUMN_CHECKPIC = "CHECKPIC";
+    private static final String COLUMN_CHECKTYPE = "CHECKTYPE";
+    private static final String COLUMN_TIME = "TIME";
+
+    // Tên bảng và cột cho bảng Workdate
+    private static final String TABLE_WORKDATE = "'WORKDATE'";
+    private static final String COLUMN_EMID = "EMID";
+    //private static final String COLUMN_SER_SCHE_ID = "SER_SCHE_ID";
+
+    // Bảng Employee
+    private static final String TABLE_EMPLOYEE = "EMPLOYEE";
+    private static final String COLUMN_EM_ID = "EMID";
+    private static final String COLUMN_EM_NAME = "EMNAME";
+    private static final String COLUMN_EM_EMAIL = "EMEMAIL";
+    private static final String COLUMN_EM_PASSWORD = "PASSWORD";
+
+
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -210,5 +232,86 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return serviceScheduleList;
     }
+
+    // Phương thức lấy thông tin nhân viên từ ID
+    public Employee getEmployeeById(int employeeId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_EMPLOYEE + " WHERE " + COLUMN_EM_ID + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(employeeId)});
+
+        Employee employee = null;
+        if (cursor.moveToFirst()) {
+            employee = new Employee(
+                    cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_EM_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EM_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EM_EMAIL)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EM_PASSWORD))  // Lấy thêm trường password
+            );
+        }
+        cursor.close();
+        db.close();
+        return employee;
+    }
+
+
+
+    // Get Workdates by Employee ID
+    public List<Workdate> getWorkdatesByEmployeeId(Long employeeId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_WORKDATE + " WHERE " + COLUMN_EMID + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(employeeId)});
+
+        List<Workdate> workdates = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                Workdate workdate = new Workdate(
+                        cursor.getLong(cursor.getColumnIndexOrThrow("WORKDATE_ID")),
+                        cursor.getLong(cursor.getColumnIndexOrThrow("EMID")),
+                        cursor.getLong(cursor.getColumnIndexOrThrow("SER_SCHE_ID"))
+                );
+                workdates.add(workdate);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return workdates;
+    }
+
+    // Get Schedule by Ser_Sche_ID
+    public Schedule getScheduleBySerScheId(Long serScheId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_SCHEDULE + " WHERE " + COLUMN_SCHEDULE_ID + " = (SELECT " + COLUMN_SCHEDULE_ID_FK + " FROM " + TABLE_SERVICE_SCHEDULE + " WHERE " + COLUMN_SER_SCHE_ID + " = ?)";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(serScheId)});
+
+        Schedule schedule = null;
+        if (cursor.moveToFirst()) {
+            schedule = new Schedule(
+                    cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
+                    cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
+                    new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE))),
+                    new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_START_TIME))),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+            );
+        }
+        cursor.close();
+        db.close();
+        return schedule;
+    }
+
+    // Insert Check_Work
+    public void addCheckWork(Check_Work checkWork) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_WORKDATE_ID, checkWork.getWorkdateId());
+        values.put(COLUMN_CHECKPIC, checkWork.getCheckPic());
+        values.put(COLUMN_CHECKTYPE, checkWork.getCheckType());
+        values.put(COLUMN_TIME, checkWork.getTime());
+        db.insert(TABLE_CHECK_WORK, null, values);
+        db.close();
+    }
+
+
+
 
 }

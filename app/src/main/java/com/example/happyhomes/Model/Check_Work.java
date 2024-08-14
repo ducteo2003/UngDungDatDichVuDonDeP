@@ -1,13 +1,11 @@
 package com.example.happyhomes.Model;
 
-import java.util.Date;
-
-public class Check {
+public class Check_Work {
     private Long checkId;
     private Long workdateId;
     private byte[] checkPic;
     private Integer checkType;
-    private Date time;
+    private String time;
 
     public Long getWorkdateId() {
         return workdateId;
@@ -17,11 +15,11 @@ public class Check {
         this.workdateId = workdateId;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -49,7 +47,7 @@ public class Check {
         this.checkId = checkId;
     }
 
-    public Check(Long checkId, Long workdateId, byte[] checkPic, Integer checkType, Date time) {
+    public Check_Work(Long checkId, Long workdateId, byte[] checkPic, Integer checkType, String time) {
         this.checkId = checkId;
         this.workdateId = workdateId;
         this.checkPic = checkPic;
