@@ -2,9 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,9 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyHomes"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".NhanVien.HoSoNVActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".NhanVien.HoSoNVActivity"
+            android:exported="false" />
         <activity
             android:name=".NhanVien.HoTroActivity"
             android:exported="false" />
@@ -43,9 +49,9 @@
 <!--        <activity-->
 <!--            android:name=".Customer.SelectTimeCustomerActivity"-->
 <!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".NhanVien.NhanVienActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".NhanVien.NhanVienActivity"
+            android:exported="false" />
         <activity
             android:name=".NhanVien.bottom_dialog"
             android:exported="false" />
@@ -58,17 +64,21 @@
 <!--        <activity-->
 <!--            android:name=".Customer.MapCustomerActivity"-->
 <!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".RegisterActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
         <activity
             android:name=".Customer.SelectTimeCustomerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
         <activity
             android:name=".Customer.MapCustomerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/MapTheme">
             <intent-filter>
@@ -81,6 +91,16 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/my_map_api_key" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
