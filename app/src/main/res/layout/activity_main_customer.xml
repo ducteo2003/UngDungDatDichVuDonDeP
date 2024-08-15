@@ -69,17 +69,130 @@
                 android:layout_marginStart="20dp" />
         </LinearLayout>
 
-        <LinearLayout
+        <!-- Grid of Icons -->
+        <GridLayout
+            android:id="@+id/category_grid_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:columnCount="3"
+            android:padding="16dp">
 
-           <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:src=""
-        </LinearLayout>
+            <!-- Icon and Label for Lunch Box -->
+            <LinearLayout
+                android:id="@+id/lunch_box_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/imgClean"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_cleaning_services_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dọn dẹp nhà"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/noodle_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_cleaning_services_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dọn dẹp nhà"/>
+            </LinearLayout>
+
+
+            <!-- Icon and Label for Milk Tea -->
+            <LinearLayout
+                android:id="@+id/milk_tea_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_cleaning_services_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dọn dẹp nhà "/>
+            </LinearLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:padding="16dp">
+
+            <!-- Icon and Label for Snack -->
+            <LinearLayout
+                android:id="@+id/snack_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_cleaning_services_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dọn dẹp nhà"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/korean_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_cleaning_services_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dọn dẹp nhà"/>
+            </LinearLayout>
+
+            <!-- Icon and Label for Healthy -->
+            <LinearLayout
+                android:id="@+id/healthy_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_cleaning_services_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dọn dẹp nhà"/>
+            </LinearLayout>
+        </GridLayout>
     </LinearLayout>
 
     <LinearLayout

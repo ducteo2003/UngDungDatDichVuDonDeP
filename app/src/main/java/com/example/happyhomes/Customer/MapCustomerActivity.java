@@ -14,9 +14,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.happyhomes.R;
 import com.example.happyhomes.databinding.ActivityMapCustomerBinding;
@@ -42,7 +39,9 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
     private androidx.appcompat.widget.SearchView mapSearchView;
     private SupportMapFragment mapFragment;
     ActivityMapCustomerBinding binding;
-    private String selectedAddress = null; // Biến lưu địa chỉ được chọn
+    private String selectedAddress = null;
+    private int cusID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("Chọn Vị Trí");
@@ -50,7 +49,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
         EdgeToEdge.enable(this);
         binding = ActivityMapCustomerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        // Tìm kiếm trên bản đồ
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
         mapSearchView = findViewById(R.id.mapSearch);
@@ -61,6 +60,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                 searchLocation(query);
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
@@ -71,6 +71,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
 
 
         binding.btnConfirm.setOnClickListener(v -> confirmLocation());
@@ -84,10 +85,9 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                 Address address = addressList.get(0);
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
-                selectedAddress = address.getAddressLine(0); // Lưu địa chỉ đã chọn
-                // Cập nhật bản đồ và thanh tìm kiếm
+                selectedAddress = address.getAddressLine(0);
                 mapSearchView.setQuery(location, false);
-                myMap.clear(); // Xóa marker cũ nếu có
+                myMap.clear();
                 myMap.addMarker(new MarkerOptions().position(latLng).title(location));
                 myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
             }
@@ -120,20 +120,17 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
     public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
 
-        // Enable map controls
         myMap.getUiSettings().setZoomControlsEnabled(true);
         myMap.getUiSettings().setCompassEnabled(true);
         myMap.getUiSettings().setZoomGesturesEnabled(true);
         myMap.getUiSettings().setScrollGesturesEnabled(true);
 
-        // Check if the current location is available and move the camera to that location
         if (currentLocation != null) {
             LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             myMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location"));
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15)); // Zoom level 15 for a closer view
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
         }
 
-        // Set up map click listener
         myMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
@@ -144,13 +141,11 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
                         Address address = addressList.get(0);
                         String location = address.getAddressLine(0);
 
-                        // Cập nhật thanh tìm kiếm với địa chỉ
                         mapSearchView.setQuery(location, false);
 
-                        // Cập nhật bản đồ
                         myMap.clear();
                         myMap.addMarker(new MarkerOptions().position(latLng).title(location));
-                        myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15)); // Mức zoom 15 cho một cái nhìn gần hơn
+                        myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -194,11 +189,20 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
 
         return super.onOptionsItemSelected(item);
     }
+
     private void confirmLocation() {
         if (selectedAddress != null) {
             Intent intent = new Intent(MapCustomerActivity.this, ServiceActivity.class);
             intent.putExtra("address", selectedAddress);
-            startActivity(intent);
+            cusID = getIntent().getIntExtra("CusId", -1);
+            if (cusID != -1) {
+                Toast.makeText(this, "Received CusID: " + cusID, Toast.LENGTH_LONG).show();
+                intent.putExtra("CusId", cusID);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "CusID not found!", Toast.LENGTH_LONG).show();
+            }
+
         } else {
             Toast.makeText(this, "Please select a location on the map", Toast.LENGTH_SHORT).show();
         }

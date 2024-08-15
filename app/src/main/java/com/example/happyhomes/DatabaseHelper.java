@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.happyhomes.Model.Check;
 import com.example.happyhomes.Model.Employee;
+import com.example.happyhomes.Model.Payment;
 import com.example.happyhomes.Model.Schedule;
 import com.example.happyhomes.Model.Service;
 import com.example.happyhomes.Model.ServiceSchedule;
@@ -209,6 +210,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return serviceScheduleList;
+    }
+    // Add new Payment
+    public void addPayment(Payment payment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("PAYID", payment.getPayId());
+        values.put("METHODID", payment.getMethodId());
+        values.put("SER_SCHE_ID", payment.getSerScheId());
+        values.put("SERVICEID", payment.getServiceId());
+        values.put("PAYDAY", payment.getPayDay().toString());
+        db.insert("PAYMENT", null, values);
+        db.close();
     }
 
 }

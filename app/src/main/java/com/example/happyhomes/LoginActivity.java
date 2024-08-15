@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.happyhomes.Customer.Main_CustomerActivity;
 import com.example.happyhomes.Model.Customer;
 import com.example.happyhomes.Model.Employee;
-import com.example.happyhomes.NhanVien.NhanVienActivity;
+/*import com.example.happyhomes.NhanVien.NhanVienActivity;*/
 import com.example.happyhomes.databinding.ActivityLoginBinding;
 
 import java.io.File;
@@ -30,10 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-
-
     ActivityLoginBinding binding;
-
     public static final String DB_NAME="data_app_cleaning.db";
     public static final String DB_FOLDER="databases";
     public static final String TBL_NAME_CUS = "CUSTOMER";
@@ -47,11 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         prepareDB();
         openDB();
         EventLogin();
-
         Register();
     }
 
@@ -69,11 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                 Cursor customers = db.rawQuery("SELECT * FROM "+ TBL_NAME_CUS, null);
                 while (customers.moveToNext())
                 {
-                    if (customers.getString(3).equalsIgnoreCase(emailLogin) && customers.getString(6).equalsIgnoreCase(passLogin)) {
+                    if (customers.getString(3).equalsIgnoreCase(emailLogin) && customers.getString(5).equalsIgnoreCase(passLogin)) {
                         Toast.makeText(LoginActivity.this, "Login SUCCESS", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, Main_CustomerActivity.class);
                         intent.putExtra("Cusname", customers.getString(1));
-                        intent.putExtra("CusId", customers.getString(0));
+                        intent.putExtra("CusId", customers.getInt(0));
                         startActivity(intent);
                         checklogin = true;
                         break;
@@ -96,9 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                         );
 
                         // Chuyển sang NhanVienActivity
-                        Intent intent = new Intent(LoginActivity.this, NhanVienActivity.class);
-                        intent.putExtra("Employee", employee);
-                        startActivity(intent);
+                        /*Intent intent = new Intent(LoginActivity.this, NhanVienActivity.class);
+                        intent.putExtra("Employee", employee);*/
+                        /*startActivity(intent);*/
+                        //đoạn này của khánh, do m comment cái nhân viên gì của nó nên nó lỗi thôi
                         break;
                     }
                 }
@@ -110,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
     private void Register() {
         binding.txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +114,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     private void prepareDB() {
@@ -134,7 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Open app FAIL", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
     //copy db vào ứng dụng
     private boolean CopyDB()
