@@ -19,7 +19,7 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
     private ActivitySelectTimeCustomerBinding binding;
     private int selectedServiceId;
     private double slectedServiceCode;
-
+    private int cusId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,22 +32,21 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
         // Set up date and time pickers
         setupDatePicker();
         setupTimePicker();
+        Intent intent = getIntent();
+        cusId = intent.getIntExtra("CusId",-1);
         // Set up the Next button click listener
         binding.btnNext.setOnClickListener(view -> {
             // Retrieve values from the views
             String selectedDate = binding.dateTextView.getText().toString();
             String selectedHour = binding.hourPicker.getText().toString();
             String additionalRequest = binding.edtNote.getText().toString();
-
             // Log the values being sent to PayAndConfirmActivity
             Log.d("SelectTimeCustomer", "Next button clicked");
             Log.d("SelectTimeCustomer", "Selected Date: " + selectedDate);
             Log.d("SelectTimeCustomer", "Selected Hour: " + selectedHour);
             Log.d("SelectTimeCustomer", "Additional Request: " + additionalRequest);
-
             // Create an Intent to start PayAndConfirmActivity
             Intent payAndConfirmIntent = new Intent(SelectTimeCustomerActivity.this, PayAndConfirmActivity.class);
-
             // Add the retrieved values to the Intent as extras
             payAndConfirmIntent.putExtra("selectedServiceId", selectedServiceId);
             payAndConfirmIntent.putExtra("selectedDate", selectedDate);
@@ -55,9 +54,11 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
             payAndConfirmIntent.putExtra("additionalRequest", additionalRequest);
             payAndConfirmIntent.putExtra("adress",binding.address.getText().toString());
             // Start the PayAndConfirmActivity
+            payAndConfirmIntent.putExtra("cost",binding.txtCost.getText().toString());
+            payAndConfirmIntent.putExtra("CusId",cusId);
             startActivity(payAndConfirmIntent);
         });
-      loadData();
+        loadData();
     }
 
     private void loadData() {
@@ -66,7 +67,7 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
             selectedServiceId = incomingIntent.getIntExtra("selectedServiceId", -1);
             slectedServiceCode = incomingIntent.getDoubleExtra("selectedServiceCost", 0.0);
             String selectedAdress= incomingIntent.getStringExtra("adress");
-            binding.txtCost.setText(String.format("%.0f VND", slectedServiceCode));
+            binding.txtCost.setText(String.format("%.0f", slectedServiceCode));
             binding.address.setText(selectedAdress);
             // Log to check the value of selectedServiceId
             Log.d("SelectTimeCustomer", "Received Service ID: " + selectedServiceId);
