@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyHomes"
         tools:targetApi="31">
+        <activity
+            android:name=".Customer.payContificationActivity"
+            android:exported="false" />
         <activity
             android:name=".NhanVien.HoSoNVActivity"
             android:exported="false" />
@@ -45,10 +49,20 @@
             android:exported="false" />
         <activity
             android:name=".Customer.PayAndConfirmActivity"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".Customer.SelectTimeCustomerActivity"-->
-<!--            android:exported="false" />-->
+            android:exported="true"
+            android:label="Merchant Demo"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".NhanVien.NhanVienActivity"
             android:exported="false" />
@@ -61,9 +75,6 @@
         <activity
             android:name=".Customer.ServiceActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".Customer.MapCustomerActivity"-->
-<!--            android:exported="false" />-->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -73,14 +84,14 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".Customer.MapCustomerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/MapTheme"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:theme="@style/MapTheme">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity {
                 Cursor customers = db.rawQuery("SELECT * FROM "+ TBL_NAME_CUS, null);
                 while (customers.moveToNext())
                 {
-                    if (customers.getString(3).equalsIgnoreCase(emailLogin) && customers.getString(6).equalsIgnoreCase(passLogin)) {
+                    if (customers.getString(3).equalsIgnoreCase(emailLogin) && customers.getString(5).equalsIgnoreCase(passLogin)) {
                         Toast.makeText(LoginActivity.this, "Login SUCCESS", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, Main_CustomerActivity.class);
                         intent.putExtra("Cusname", customers.getString(1));
-                        intent.putExtra("CusId", customers.getString(0));
+                        intent.putExtra("CusId", customers.getInt(0));
                         startActivity(intent);
                         checklogin = true;
                         break;

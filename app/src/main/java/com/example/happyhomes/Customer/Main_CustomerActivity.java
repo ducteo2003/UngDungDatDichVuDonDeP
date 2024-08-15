@@ -2,6 +2,7 @@ package com.example.happyhomes.Customer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,7 @@ import com.example.happyhomes.databinding.ActivityMainCustomerBinding;
 
 public class Main_CustomerActivity extends AppCompatActivity {
 
-    private String cusID;
+    private int cusID;
 
     ActivityMainCustomerBinding binding;
     @Override
@@ -25,18 +26,34 @@ public class Main_CustomerActivity extends AppCompatActivity {
         binding = ActivityMainCustomerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         loadActivity();
+        addEvent();
+
     }
+
+    private void addEvent() {
+        binding.imgClean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Main_CustomerActivity.this,MapCustomerActivity.class);
+                intent.putExtra("CusId",cusID);
+                startActivity(intent);
+            }
+        });
+    }
+
     public void loadActivity()
     {
         Intent intent = getIntent();
         if (intent != null) {
             String cusName = intent.getStringExtra("Cusname");
-            String cusId = intent.getStringExtra("CusId");
+            int cusId = intent.getIntExtra("CusId",-1);
 
-            if (cusName != null && cusId != null) {
+            if (cusName != null && cusId != -1) {
                 binding.txtUserName.setText(String.format("Xin chào, "+ cusName));
                 cusID = cusId;
             }
         }
     }
+
 }
