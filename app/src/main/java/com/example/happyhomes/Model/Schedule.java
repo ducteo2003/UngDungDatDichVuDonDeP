@@ -20,6 +20,10 @@ public class Schedule {
         return dateFormat.format(date);
     }
 
+    public Long getStartTimeTimestamp() {
+        return startTime.getTime();
+    }
+
     public String getStartTimeString() {
         return timeFormat.format(startTime);
     }
@@ -61,6 +65,14 @@ public class Schedule {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Date getStartTime() {
+        return startTime;
     }
 
     public Schedule(Long scheduleId, Long cusId, Date date, Date startTime, String location, String status) {
