@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyHomes"
         tools:targetApi="31">
+
         <activity
             android:name=".NhanVien.HoSoNVActivity"
             android:exported="false" />
@@ -46,9 +47,6 @@
         <activity
             android:name=".Customer.PayAndConfirmActivity"
             android:exported="false" />
-        <!--        <activity-->
-        <!--            android:name=".Customer.SelectTimeCustomerActivity"-->
-        <!--            android:exported="false" />-->
         <activity
             android:name=".NhanVien.NhanVienActivity"
             android:exported="false" />
@@ -61,9 +59,6 @@
         <activity
             android:name=".Customer.ServiceActivity"
             android:exported="false" />
-        <!--        <activity-->
-        <!--            android:name=".Customer.MapCustomerActivity"-->
-        <!--            android:exported="false" />-->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -73,7 +68,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".Customer.MapCustomerActivity"
             android:exported="false" />
@@ -83,7 +77,6 @@
             android:theme="@style/MapTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
