@@ -83,4 +83,13 @@ public class Schedule {
         this.location = location;
         this.status = status;
     }
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "date=" + getDateString() +
+                ", startTime=" + getStartTimeString() +
+                ", location='" + location + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

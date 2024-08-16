@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -177,24 +178,83 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public List<Schedule> getSchedulesByCusId(long cusId) {
+        List<Schedule> scheduleList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SCHEDULE + " WHERE " + COLUMN_CUS_ID + " = " + cusId;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Định nghĩa các định dạng ngày và thời gian phù hợp với định dạng lưu trữ
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    // Lấy chuỗi ngày và thời gian từ cơ sở dữ liệu
+                    String dateString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
+                    String timeString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
+
+                    // Phân tích chuỗi thành đối tượng Date
+                    Date date = dateFormat.parse(dateString);
+                    Date startTime = timeFormat.parse(timeString);
+
+                    // Tạo đối tượng Schedule với các giá trị đã phân tích
+                    Schedule schedule = new Schedule(
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
+                            date,
+                            startTime,
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                    );
+                    scheduleList.add(schedule);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    // Bạn có thể chọn bỏ qua bản ghi này hoặc xử lý khác tùy theo yêu cầu của ứng dụng
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return scheduleList;
+    }
+
     // Get all Schedules
     public List<Schedule> getAllSchedules() {
         List<Schedule> scheduleList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_SCHEDULE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+        // Định nghĩa các định dạng ngày và thời gian phù hợp với định dạng lưu trữ
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
         if (cursor.moveToFirst()) {
             do {
-                Schedule schedule = new Schedule(
-                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
-                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
-                        new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE))),
-                        new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_START_TIME))),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
-                );
-                scheduleList.add(schedule);
+                try {
+                    // Lấy chuỗi ngày và thời gian từ cơ sở dữ liệu
+                    String dateString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
+                    String timeString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
+
+                    // Phân tích chuỗi thành đối tượng Date
+                    Date date = dateFormat.parse(dateString);
+                    Date startTime = timeFormat.parse(timeString);
+
+                    // Tạo đối tượng Schedule với các giá trị đã phân tích
+                    Schedule schedule = new Schedule(
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
+                            date,
+                            startTime,
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                    );
+                    scheduleList.add(schedule);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    // Bạn có thể chọn bỏ qua bản ghi này hoặc xử lý khác tùy theo yêu cầu của ứng dụng
+                }
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -211,26 +271,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_SERVICE_SCHEDULE, null, values);
         db.close();
     }
-    public List<ServiceSchedule> getAllServiceSchedules() {
-        List<ServiceSchedule> serviceScheduleList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_SERVICE_SCHEDULE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                ServiceSchedule serviceSchedule = new ServiceSchedule(
-                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SER_SCHE_ID)),
-                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SERVICE_ID_FK)),
-                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID_FK))
-                );
-                serviceScheduleList.add(serviceSchedule);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return serviceScheduleList;
-    }
 
     // Phương thức lấy thông tin nhân viên từ ID
     public Employee getEmployeeById(int employeeId) {
