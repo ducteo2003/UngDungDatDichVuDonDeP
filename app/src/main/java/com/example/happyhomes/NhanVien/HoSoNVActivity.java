@@ -25,7 +25,7 @@ public class HoSoNVActivity extends AppCompatActivity {
         binding = ActivityHoSoNvactivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         // Nhận Employee ID từ Intent
-        int employeeId = getIntent().getIntExtra("EMPLOYEE_ID", -1);
+        long employeeId = getIntent().getLongExtra("EMPLOYEE_ID", -1);
         if (employeeId != -1) {
             // Tải dữ liệu nhân viên từ cơ sở dữ liệu
             loadEmployeeData(employeeId);
@@ -34,7 +34,7 @@ public class HoSoNVActivity extends AppCompatActivity {
 
     }
 
-    private void loadEmployeeData(int employeeId) {
+    private void loadEmployeeData(long employeeId) {
         // Khởi tạo DatabaseHelper
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 

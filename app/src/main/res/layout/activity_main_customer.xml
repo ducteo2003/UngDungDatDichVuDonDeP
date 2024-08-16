@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Customer.Main_CustomerActivity"
-    android:padding="30dp">
-
+    android:padding="20dp"
+    android:orientation="vertical"
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentTop="true">
+        android:padding="16dp"
+        android:background="@drawable/background_home_customer"
+        android:layout_marginTop="20dp">
 
+        <!-- Greeting Section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/txtUserName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Xin chào quý khách"
@@ -35,214 +42,216 @@
                 android:src="@drawable/customer" />
         </LinearLayout>
 
+        <!-- Outer LinearLayout wrapping the Category Section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/background_customer_main"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            android:background="@drawable/background_icon_home">
 
-            <TextView
+            <!-- Category Section -->
+            <LinearLayout
+                android:id="@+id/category_section"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="50% Off Everything!"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="12dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save big on your entire other."
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp" />
+                <!-- Category Buttons -->
+                <LinearLayout
+                    android:id="@+id/lunch_box_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/imgClean"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/icons_clean"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dọn dẹp nhà"/>
+                </LinearLayout>
 
-            <Button
-                android:id="@+id/btnOrderNow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Order Now"
-                android:backgroundTint="#FF9800"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp" />
+
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Grid of Icons -->
-        <GridLayout
-            android:id="@+id/category_grid_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:padding="16dp">
-
-            <!-- Icon and Label for Lunch Box -->
-            <LinearLayout
-                android:id="@+id/lunch_box_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-                <ImageView
-                    android:id="@+id/imgClean"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/baseline_cleaning_services_24"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dọn dẹp nhà"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/noodle_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/baseline_cleaning_services_24"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dọn dẹp nhà"/>
-            </LinearLayout>
-
-
-            <!-- Icon and Label for Milk Tea -->
-            <LinearLayout
-                android:id="@+id/milk_tea_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/baseline_cleaning_services_24"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dọn dẹp nhà "/>
-            </LinearLayout>
-        </GridLayout>
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:padding="16dp">
-
-            <!-- Icon and Label for Snack -->
-            <LinearLayout
-                android:id="@+id/snack_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/baseline_cleaning_services_24"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dọn dẹp nhà"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/korean_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/baseline_cleaning_services_24"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dọn dẹp nhà"/>
-            </LinearLayout>
-
-            <!-- Icon and Label for Healthy -->
-            <LinearLayout
-                android:id="@+id/healthy_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/baseline_cleaning_services_24"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dọn dẹp nhà"/>
-            </LinearLayout>
-        </GridLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Một Số Hình Ảnh Tham Khảo:"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:layout_alignParentBottom="true">
+        android:layout_marginTop="15dp">
 
-        <ImageButton
-            android:id="@+id/btnHome"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/baseline_home_24"
-            android:backgroundTint="@color/white" />
 
-        <ImageButton
-            android:id="@+id/btnGido"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/baseline_home_24"
-            android:backgroundTint="@color/white"
-            android:layout_marginStart="35dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btnAdd"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/add"
-            android:layout_marginStart="35dp"
-            android:background="@drawable/circle_shape" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
-        <ImageButton
-            android:id="@+id/btnMessage"
-            android:layout_width="45dp"
-            android:layout_height="35dp"
-            android:src="@drawable/message"
-            android:layout_marginStart="35dp"
-            android:backgroundTint="@color/white" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btnSave"
-            android:layout_width="45dp"
-            android:layout_height="35dp"
-            android:src="@drawable/save"
-            android:layout_marginStart="35dp"
-            android:backgroundTint="@color/white" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dondep1" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dondep2" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dondep5" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dondep3" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dondep4" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 
-</RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>

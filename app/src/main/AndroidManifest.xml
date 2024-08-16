@@ -50,6 +50,8 @@
         <activity
             android:name=".NhanVien.TaiKhoan"
             android:exported="false" />
+
+
         <activity
             android:name=".Customer.PayAndConfirmActivity"
             android:exported="true"
