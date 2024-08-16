@@ -24,6 +24,9 @@
         android:theme="@style/Theme.HappyHomes"
         tools:targetApi="31">
         <activity
+            android:name=".Customer.ProfileCustomerActivity"
+            android:exported="false" />
+        <activity
             android:name=".Customer.payContificationActivity"
             android:exported="false" />
         <activity
@@ -87,11 +90,10 @@
         <activity
             android:name=".Customer.MapCustomerActivity"
             android:exported="false"
-            android:theme="@style/MapTheme"/>
+            android:theme="@style/MapTheme" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

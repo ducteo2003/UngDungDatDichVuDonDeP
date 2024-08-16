@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login SUCCESS", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, Main_CustomerActivity.class);
                         intent.putExtra("Cusname", customers.getString(1));
+                        intent.putExtra("phone",customers.getString(2));
                         intent.putExtra("CusId", customers.getInt(0));
                         startActivity(intent);
                         checklogin = true;

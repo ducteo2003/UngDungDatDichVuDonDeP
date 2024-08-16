@@ -40,7 +40,21 @@ public class Main_CustomerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        binding.imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = getIntent();
+                Intent intent = new Intent(Main_CustomerActivity.this,ProfileCustomerActivity.class);
+                String cusName = intent1.getStringExtra("Cusname");
+                String Phone = intent1.getStringExtra("phone");
+                intent.putExtra("CusId",cusID);
+                intent.putExtra("phone",Phone);
+                intent.putExtra("Cusname",cusName);
+                startActivity(intent);
+            }
+        });
     }
+
 
     public void loadActivity()
     {
