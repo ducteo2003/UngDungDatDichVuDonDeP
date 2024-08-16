@@ -274,7 +274,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // Phương thức lấy thông tin nhân viên từ ID
-    public Employee getEmployeeById(int employeeId) {
+    public Employee getEmployeeById(long employeeId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_EMPLOYEE + " WHERE " + COLUMN_EM_ID + " = ?";
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(employeeId)});
@@ -285,7 +285,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_EM_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EM_NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EM_EMAIL)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EM_PASSWORD))  // Lấy thêm trường password
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EM_PASSWORD))
             );
         }
         cursor.close();
