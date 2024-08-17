@@ -3,12 +3,14 @@ package com.example.happyhomes.Customer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhomes.DatabaseHelper;
+import com.example.happyhomes.LoginActivity;
 import com.example.happyhomes.Model.Schedule;
 import com.example.happyhomes.R;
 import com.example.happyhomes.databinding.ActivityProfileCustomerBinding;
@@ -25,9 +27,19 @@ public class ProfileCustomerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileCustomerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         databaseHelper = new DatabaseHelper(this);
         loadData();
+        addEvent();
+    }
+
+    private void addEvent() {
+        binding.txtDangxuat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  =new Intent(ProfileCustomerActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadData() {

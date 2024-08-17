@@ -34,9 +34,11 @@ public class Main_CustomerActivity extends AppCompatActivity {
         binding.imgClean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent1 = getIntent();
+                String cusName = intent1.getStringExtra("Cusname");
                 Intent intent = new Intent(Main_CustomerActivity.this,MapCustomerActivity.class);
                 intent.putExtra("CusId",cusID);
+                intent.putExtra("Cusname",cusName);
                 startActivity(intent);
             }
         });
