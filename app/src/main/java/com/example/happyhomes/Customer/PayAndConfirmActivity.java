@@ -1,5 +1,6 @@
 package com.example.happyhomes.Customer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -7,10 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhomes.Api.CreateOrder;
 import com.example.happyhomes.DatabaseHelper;
+import com.example.happyhomes.LoginActivity;
 import com.example.happyhomes.Model.Payment;
 import com.example.happyhomes.Model.Schedule;
 import com.example.happyhomes.Model.ServiceSchedule;
@@ -34,7 +37,7 @@ public class PayAndConfirmActivity extends AppCompatActivity {
     ActivityPayAndConfirmBinding binding;
     DatabaseHelper databaseHelper;
     private int cusId;
-
+    private String cusName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,7 @@ public class PayAndConfirmActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         Intent intent = getIntent();
         cusId = intent.getIntExtra("CusId",-1);
+        cusName = intent.getStringExtra("Cusname");
         // Load data from the intent and display on the UI
         loadData();
         StrictMode.ThreadPolicy policy = new
@@ -57,8 +61,27 @@ public class PayAndConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveJobToDatabase();
+                showSuccessDialog();
+
             }
         });
+    }
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thành công");
+        builder.setMessage("Công việc đã đăng thành công.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                Intent intent1 = new Intent(PayAndConfirmActivity.this, Main_CustomerActivity.class);
+                intent1.putExtra("Cusname", cusName);
+                intent1.putExtra("CusId", cusId);
+                startActivity(intent1);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     private void loadData() {
         // Get data from the intent and display on the TextViews
@@ -118,6 +141,8 @@ public class PayAndConfirmActivity extends AppCompatActivity {
                 databaseHelper.addServiceSchedule(serviceSchedule);
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 java.sql.Date payDay = new java.sql.Date(timestamp.getTime());
+
+
                 if(binding.rdoTienMat.isChecked()){
                     Payment payment = new Payment(
                             null,
@@ -126,6 +151,8 @@ public class PayAndConfirmActivity extends AppCompatActivity {
                             (long) serviceId,
                             payDay
                     );
+
+
                     databaseHelper.addPayment(payment);
                 }else if(binding.rdoZalo.isChecked()){
                     Payment payment = new Payment(
@@ -138,18 +165,15 @@ public class PayAndConfirmActivity extends AppCompatActivity {
                     databaseHelper.addPayment(payment);
                     zalopay();
                 }
-                // Save the payment to the database
-
                 Toast.makeText(this, "Job posted successfully!", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Failed to save job.", Toast.LENGTH_LONG).show();
             }
         } catch (ParseException e) {
             Log.e("PayAndConfirmActivity", "Error parsing date or hour", e);
-            Toast.makeText(this, "Failed to post job", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e("PayAndConfirmActivity", "Error saving job to database", e);
-            Toast.makeText(this, "Failed to post job", Toast.LENGTH_LONG).show();
+
         }
 
 

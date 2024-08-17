@@ -20,6 +20,7 @@ public class ServiceActivity extends AppCompatActivity {
     private List<Service> serviceList;
     private static final String TAG = "ServiceActivity";
     private int cusID;
+    private String cusName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class ServiceActivity extends AppCompatActivity {
             binding.address.setText("No address selected");
         }
         cusID = intent.getIntExtra("CusId",-1);
+        cusName = intent.getStringExtra("Cusname");
         // Load services from database and display them in RadioButtons
         loadServicesIntoRadioButtons();
         addEvents();
@@ -167,6 +169,7 @@ public class ServiceActivity extends AppCompatActivity {
             selectTimeIntent.putExtra("selectedServiceCost", selectedServiceCost);
             selectTimeIntent.putExtra("adress", binding.address.getText());
             selectTimeIntent.putExtra("CusId",cusID);
+            selectTimeIntent.putExtra("Cusname",cusName);
             startActivity(selectTimeIntent);
         });
     }

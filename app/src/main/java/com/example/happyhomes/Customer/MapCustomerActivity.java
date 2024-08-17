@@ -93,7 +93,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vị trí chưa được chọn", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -127,7 +127,7 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
 
         if (currentLocation != null) {
             LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            myMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location"));
+            myMap.addMarker(new MarkerOptions().position(currentLatLng).title("Vị trí hiện tại"));
             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
         }
 
@@ -195,16 +195,18 @@ public class MapCustomerActivity extends AppCompatActivity implements OnMapReady
             Intent intent = new Intent(MapCustomerActivity.this, ServiceActivity.class);
             intent.putExtra("address", selectedAddress);
             cusID = getIntent().getIntExtra("CusId", -1);
+            String cusName = getIntent().getStringExtra("Cusname");
             if (cusID != -1) {
-                Toast.makeText(this, "Received CusID: " + cusID, Toast.LENGTH_LONG).show();
+
                 intent.putExtra("CusId", cusID);
+                intent.putExtra("Cusname",cusName);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "CusID not found!", Toast.LENGTH_LONG).show();
             }
 
         } else {
-            Toast.makeText(this, "Please select a location on the map", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Hãy chọn vị trí ở trên bản đồ", Toast.LENGTH_SHORT).show();
         }
     }
 }

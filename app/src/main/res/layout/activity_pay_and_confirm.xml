@@ -25,7 +25,7 @@
         android:id="@+id/header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Xác nhận và thanh toán"
+        android:text="@string/x_c_nh_n_v_thanh_to_n"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -38,7 +38,7 @@
         android:id="@+id/location_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vị trí làm việc"
+        android:text="@string/v_tr_l_m_vi_c"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -82,7 +82,7 @@
         android:id="@+id/work_info_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thông tin công việc"
+        android:text="@string/th_ng_tin_c_ng_vi_c"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -109,7 +109,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thời gian làm việc"
+            android:text="@string/th_i_gian_l_m_vi_c"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/black" />
@@ -118,7 +118,7 @@
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ngày làm việc: thứ hai, 12/08/2024 - 14:00"
+            android:text="@string/ng_y_l_m_vi_c_th_hai_12_08_2024_14_00"
             android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
             android:layout_marginTop="4dp" />
@@ -136,7 +136,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chi tiết công việc"
+            android:text="@string/ghi_ch"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -157,7 +157,7 @@
         android:id="@+id/payment_method_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phương thức thanh toán"
+        android:text="@string/ph_ng_th_c_thanh_to_n"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -167,8 +167,9 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Payment Method Details -->
-    <LinearLayout
-        android:id="@+id/payment_method_details"
+    <!-- Payment Method Details with RadioGroup -->
+    <RadioGroup
+        android:id="@+id/payment_method_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -184,17 +185,17 @@
         <RadioButton
             android:id="@+id/rdoTienMat"
             android:layout_width="40dp"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp" />
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_cash"
-            />
+            android:src="@drawable/ic_cash" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tiền mặt"
+            android:text="@string/ti_n_m_t"
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginStart="16dp" />
@@ -203,13 +204,12 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/zalopay"
-            />
+            android:src="@drawable/zalopay" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="zalo"
+            android:text="Zalo"
             android:textSize="16sp"
             android:textColor="@android:color/holo_orange_dark"
             android:layout_marginStart="16dp" />
@@ -217,9 +217,8 @@
         <RadioButton
             android:id="@+id/rdoZalo"
             android:layout_width="24dp"
-            android:layout_height="24dp"/>
-
-    </LinearLayout>
+            android:layout_height="24dp" />
+    </RadioGroup>
 
     <!-- Total Amount and Confirm Button -->
     <LinearLayout
@@ -228,7 +227,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="#4CAF50"
+        android:background="#2196F3"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -239,16 +238,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="216,000 VND"
+            android:text="216,000"
             android:textSize="18sp"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
-
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="VND"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginStart="-150dp"/>
         <Button
             android:id="@+id/btnPostJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đăng việc"
+            android:text="@string/ng_vi_c"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:background="@android:color/transparent" />

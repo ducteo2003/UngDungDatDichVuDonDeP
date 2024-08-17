@@ -20,6 +20,7 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
     private int selectedServiceId;
     private double slectedServiceCode;
     private int cusId;
+    private String cusName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
         setupTimePicker();
         Intent intent = getIntent();
         cusId = intent.getIntExtra("CusId",-1);
+        cusName = intent.getStringExtra("Cusname");
         // Set up the Next button click listener
         binding.btnNext.setOnClickListener(view -> {
             // Retrieve values from the views
@@ -56,6 +58,7 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
             // Start the PayAndConfirmActivity
             payAndConfirmIntent.putExtra("cost",binding.txtCost.getText().toString());
             payAndConfirmIntent.putExtra("CusId",cusId);
+            payAndConfirmIntent.putExtra("Cusname",cusName);
             startActivity(payAndConfirmIntent);
         });
         loadData();
@@ -115,7 +118,6 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
                     },
                     hour, minute, true
             );
-
             timePickerDialog.show();
         });
     }
