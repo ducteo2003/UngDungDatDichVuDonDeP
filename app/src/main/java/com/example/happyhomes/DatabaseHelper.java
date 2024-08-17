@@ -261,6 +261,136 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return scheduleList;
     }
+    public List<Schedule> getSchedulesByStatus(String status) {
+        List<Schedule> scheduleList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
+        String selectQuery = "SELECT * FROM " + TABLE_SCHEDULE + " WHERE " + COLUMN_STATUS + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{status});
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    String dateString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
+                    String timeString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
+                    Date date = dateFormat.parse(dateString);
+                    Date startTime = timeFormat.parse(timeString);
+
+                    Schedule schedule = new Schedule(
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
+                            date,
+                            startTime,
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                    );
+                    scheduleList.add(schedule);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return scheduleList;
+    }
+
+    public List<Schedule> getSchedulesByEmployeeIdAndStatus(long emId, List<String> statuses) {
+        List<Schedule> schedules = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
+        StringBuilder query = new StringBuilder("SELECT S.* FROM SCHEDULE S " +
+                "INNER JOIN SERVICE_SCHEDULE ON S.SCHEDULEID = SERVICE_SCHEDULE.SCHEDULEID " +
+                "INNER JOIN WORKDATE ON SERVICE_SCHEDULE.SER_SCHE_ID = WORKDATE.SER_SCHE_ID " +
+                "WHERE WORKDATE.EMID = ? AND S.STATUS IN (");
+
+        for (int i = 0; i < statuses.size(); i++) {
+            query.append("?");
+            if (i < statuses.size() - 1) {
+                query.append(", ");
+            }
+        }
+        query.append(")");
+
+        String[] statusArray = statuses.toArray(new String[0]);
+        String[] args = new String[statusArray.length + 1];
+        args[0] = String.valueOf(emId);
+        System.arraycopy(statusArray, 0, args, 1, statusArray.length);
+
+        Cursor cursor = db.rawQuery(query.toString(), args);
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    String dateString = cursor.getString(cursor.getColumnIndexOrThrow("DATE"));
+                    String timeString = cursor.getString(cursor.getColumnIndexOrThrow("STARTTIME"));
+                    Date date = dateFormat.parse(dateString);
+                    Date startTime = timeFormat.parse(timeString);
+
+                    Schedule schedule = new Schedule(
+                            cursor.getLong(cursor.getColumnIndexOrThrow("SCHEDULEID")),
+                            cursor.getLong(cursor.getColumnIndexOrThrow("CUSID")),
+                            date,
+                            startTime,
+                            cursor.getString(cursor.getColumnIndexOrThrow("LOCATION")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("STATUS"))
+                    );
+                    schedules.add(schedule);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return schedules;
+    }
+
+    // Phương thức đăng ký ca làm việc
+    public boolean registerSchedule(long employeeId, long scheduleId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Cập nhật trạng thái của Schedule thành "Đã xác nhận"
+            ContentValues values = new ContentValues();
+            values.put("STATUS", "Đã xác nhận");
+            db.update("SCHEDULE", values, "SCHEDULEID = ?", new String[]{String.valueOf(scheduleId)});
+
+            // Lấy Ser_Sche_Id từ bảng SERVICE_SCHEDULE
+            String selectQuery = "SELECT SER_SCHE_ID FROM SERVICE_SCHEDULE WHERE SCHEDULEID = ?";
+            Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(scheduleId)});
+            long serScheId = -1;
+            if (cursor.moveToFirst()) {
+                serScheId = cursor.getLong(cursor.getColumnIndexOrThrow("SER_SCHE_ID"));
+            }
+            cursor.close();
+
+            // Thêm một record vào bảng Workdate để ghi nhận việc đăng ký
+            if (serScheId != -1) {
+                ContentValues workdateValues = new ContentValues();
+                workdateValues.put("EMID", employeeId);
+                workdateValues.put("SER_SCHE_ID", serScheId);
+                db.insert("WORKDATE", null, workdateValues);
+            }
+
+            db.setTransactionSuccessful();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+    }
+
+
+
 
     // Add new ServiceSchedule
     public void addServiceSchedule(ServiceSchedule serviceSchedule) {

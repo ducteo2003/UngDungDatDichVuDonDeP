@@ -257,6 +257,27 @@ public class NhanVienActivity extends AppCompatActivity {
             txtEmployeeName.setText(employee.getEmName());
         }
 
+        //Lịch làm việc
+        LinearLayout linearLichLamViec= dialog.findViewById(R.id.layotLich);
+        linearLichLamViec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NhanVienActivity.this, ScheduleActivity.class);
+                intent.putExtra("EMPLOYEE_ID", employee.getEmId());
+                startActivity(intent);
+            }
+        });
+        //Lich sử làm việc
+        LinearLayout linearLichSuLamViec= dialog.findViewById(R.id.layotThuNhap);
+        linearLichSuLamViec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NhanVienActivity.this, LichSuCongViecActivity.class);
+                intent.putExtra("EMPLOYEE_ID", employee.getEmId());
+                startActivity(intent);
+            }
+        });
+
         //ho tro
         LinearLayout linearHoTro = dialog.findViewById(R.id.layotHoTro);
         linearHoTro.setOnClickListener(new View.OnClickListener() {
