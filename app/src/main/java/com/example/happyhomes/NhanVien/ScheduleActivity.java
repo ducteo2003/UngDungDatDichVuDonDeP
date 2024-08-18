@@ -83,13 +83,13 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public void refreshData() {
         List<Schedule> filteredSchedules = databaseHelper.getSchedulesByStatus("Đang chờ");
-        scheduleAdapter = new ScheduleAdapter(this, filteredSchedules, employeeId);
+        scheduleAdapter = new ScheduleAdapter(this, filteredSchedules, employeeId,true);
         lvCongViec.setAdapter(scheduleAdapter);
     }
 
     private void filterSchedulesByStatus(List<String> statuses) {
         List<Schedule> filteredSchedules = databaseHelper.getSchedulesByEmployeeIdAndStatus(employeeId, statuses);
-        scheduleAdapter = new ScheduleAdapter(this, filteredSchedules, employeeId);
+        scheduleAdapter = new ScheduleAdapter(this, filteredSchedules, employeeId,true);
         lvCongViec.setAdapter(scheduleAdapter);
     }
 

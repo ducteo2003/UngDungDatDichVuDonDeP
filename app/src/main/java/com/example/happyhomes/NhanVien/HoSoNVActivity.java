@@ -1,6 +1,8 @@
 package com.example.happyhomes.NhanVien;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +33,21 @@ public class HoSoNVActivity extends AppCompatActivity {
             loadEmployeeData(employeeId);
         }
 
+        addEvents();
+
+
+    }
+
+    private void addEvents() {
+        binding.backToNV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to the NhanVienActivity
+                Intent intent = new Intent(HoSoNVActivity.this, NhanVienActivity.class);
+                startActivity(intent);
+                finish(); // Optional: Finish the current activity
+            }
+        });
 
     }
 

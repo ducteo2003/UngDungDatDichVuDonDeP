@@ -70,7 +70,7 @@ public class LichSuCongViecActivity extends AppCompatActivity {
 
     private void loadCompletedSchedules() {
         List<Schedule> completedSchedules = databaseHelper.getSchedulesByEmployeeIdAndStatus(employeeId, Arrays.asList("Hoàn tất"));
-        scheduleAdapter = new ScheduleAdapter(this, completedSchedules, employeeId);
+        scheduleAdapter = new ScheduleAdapter(this, completedSchedules, employeeId, true);
         lvLSCongViec.setAdapter(scheduleAdapter);
     }
 

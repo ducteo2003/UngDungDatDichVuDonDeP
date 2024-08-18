@@ -68,5 +68,16 @@ public class TaiKhoan extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.backToNV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to the NhanVienActivity
+                Intent intent = new Intent(TaiKhoan.this, NhanVienActivity.class);
+                startActivity(intent);
+                finish(); // Optional: Finish the current activity
+            }
+        });
+
     }
 }

@@ -68,5 +68,16 @@ public class ThuNhap extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.backToNV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to the NhanVienActivity
+                Intent intent = new Intent(ThuNhap.this, NhanVienActivity.class);
+                startActivity(intent);
+                finish(); // Optional: Finish the current activity
+            }
+        });
+
     }
 }

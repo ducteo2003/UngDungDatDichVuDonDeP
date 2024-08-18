@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +30,7 @@ import com.example.happyhomes.databinding.ActivityNhanVienBinding;
 import android.content.DialogInterface;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -59,8 +63,10 @@ public class NhanVienActivity extends AppCompatActivity {
         // Hiển thị thông tin Employee
         binding.txtusername.setText(employee.getEmName());
 
+        binding.lvLichSu.setEmptyView(findViewById(R.id.txtEmpty));
+
         // Khôi phục trạng thái từ SharedPreferences
-        restoreCheckStatusFromPreferences();
+        //restoreCheckStatusFromPreferences();
 
         addEvents();
 
@@ -81,7 +87,7 @@ public class NhanVienActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!checkIn && binding.btnCheckIn.getText().toString().equals("Sẵn sàng làm việc")) {
                     showReadyToWorkDialog();
-                } else if (checkIn && binding.btnCheckIn.getText().toString().equals("Tạm nghỉ")) {
+                } else if (checkIn && binding.btnCheckIn.getText().toString().equals("Hoàn thành")) {
                     showConfirmDialog();
                 }
             }
@@ -96,6 +102,7 @@ public class NhanVienActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         TextView tvReadyDate = dialogView.findViewById(R.id.tvReadyDate);
@@ -129,30 +136,52 @@ public class NhanVienActivity extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         List<Schedule> schedules = dbHelper.getAvailableSchedulesByEmployeeId(employee.getEmId());
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NhanVienActivity.this);
-        builder.setTitle("Chọn lịch làm việc");
+        Dialog dialog = new Dialog(NhanVienActivity.this);
+        dialog.setContentView(R.layout.dialog_available_schedules);
 
-        String[] scheduleItems = new String[schedules.size()];
-        for (int i = 0; i < schedules.size(); i++) {
-            scheduleItems[i] = schedules.get(i).getLocation() + " - " + schedules.get(i).getDateString();
-        }
+        ListView lvSchedules = dialog.findViewById(R.id.lvSchedules);
+        ScheduleAdapter adapter = new ScheduleAdapter(this, schedules, employee.getEmId(), false);
+        lvSchedules.setAdapter(adapter);
 
-        builder.setItems(scheduleItems, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                selectedSchedule = schedules.get(which); // Gán giá trị cho selectedSchedule
-                updateScheduleStatusToWorking(selectedSchedule.getScheduleId());
-            }
+        lvSchedules.setOnItemClickListener((parent, view, position, id) -> {
+            selectedSchedule = schedules.get(position); // Gán giá trị cho selectedSchedule
+            updateScheduleStatusToWorking(selectedSchedule.getScheduleId());
+            showSelectedScheduleDetails(selectedSchedule);
+            dialog.dismiss(); // Đóng dialog sau khi chọn lịch làm việc
         });
 
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        // Xử lý nút Hủy
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        builder.create().show();
+        dialog.show();
+
+//        AlertDialog.Builder builder = new AlertDialog.Builder(NhanVienActivity.this);
+//        builder.setTitle("Chọn lịch làm việc");
+//
+//        String[] scheduleItems = new String[schedules.size()];
+//        for (int i = 0; i < schedules.size(); i++) {
+//            scheduleItems[i] = schedules.get(i).getLocation() + " - " + schedules.get(i).getDateString();
+//        }
+//
+//        builder.setItems(scheduleItems, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                selectedSchedule = schedules.get(which); // Gán giá trị cho selectedSchedule
+//                updateScheduleStatusToWorking(selectedSchedule.getScheduleId());
+//                showSelectedScheduleDetails(selectedSchedule);
+//            }
+//        });
+//
+//        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        builder.create().show();
     }
 
     private void updateScheduleStatusToWorking(Long scheduleId) {
@@ -161,8 +190,18 @@ public class NhanVienActivity extends AppCompatActivity {
 
         // Cập nhật giao diện hoặc thông báo cho người dùng
         checkIn = true;
+        //saveCheckStatusToPreferences(0);
         binding.txtstatus.setText("Đang làm việc");
-        binding.btnCheckIn.setText("Tạm nghỉ");
+        binding.btnCheckIn.setText("Hoàn thành");
+    }
+
+    private void showSelectedScheduleDetails(Schedule schedule) {
+        List<Schedule> selectedSchedules = new ArrayList<>();
+        selectedSchedules.add(schedule);
+
+
+        ScheduleAdapter adapter = new ScheduleAdapter(this, selectedSchedules, false);
+        binding.lvLichSu.setAdapter(adapter);
     }
 
     private void showConfirmDialog() {
@@ -172,9 +211,9 @@ public class NhanVienActivity extends AppCompatActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(NhanVienActivity.this);
-        builder.setTitle("Xác nhận Tạm nghỉ");
+        builder.setTitle("Xác nhận Hoàn thành");
 
-        builder.setMessage("Bạn có chắc chắn muốn Tạm nghỉ?");
+        builder.setMessage("Bạn có chắc chắn muốn Hoàn thành?");
 
         builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
             @Override
@@ -188,8 +227,11 @@ public class NhanVienActivity extends AppCompatActivity {
 
                 // Cập nhật giao diện
                 checkIn = false;
-                binding.txtstatus.setText("Tạm nghỉ");
+                //saveCheckStatusToPreferences(1);
+                binding.txtstatus.setText("Hoàn thành");
                 binding.btnCheckIn.setText("Sẵn sàng làm việc");
+
+                clearScheduleDetails();
             }
         });
 
@@ -223,6 +265,12 @@ public class NhanVienActivity extends AppCompatActivity {
         dbHelper.addCheckWork(checkWork);
     }
 
+    private void clearScheduleDetails() {
+        List<Schedule> emptyList = new ArrayList<>();
+        ScheduleAdapter adapter = new ScheduleAdapter(this, emptyList, true);
+        binding.lvLichSu.setAdapter(adapter);
+    }
+
     // Lưu trạng thái vào SharedPreferences
     private void saveCheckStatusToPreferences(int checkType) {
         SharedPreferences sharedPreferences = getSharedPreferences("CheckStatusPrefs", MODE_PRIVATE);
@@ -236,13 +284,13 @@ public class NhanVienActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("CheckStatusPrefs", MODE_PRIVATE);
         int checkType = sharedPreferences.getInt("CheckType", -1);
 
-        if (checkType == 1) { // 1 là Check-in
+        if (checkType == 0) { // 1 là Check-in
             checkIn = true;
             binding.txtstatus.setText("Đang làm việc");
-            binding.btnCheckIn.setText("Tạm nghỉ");
-        } else if (checkType == 0) { // 0 là Check-out
+            binding.btnCheckIn.setText("Hoàn thành");
+        } else if (checkType == 1) { // 0 là Check-out
             checkIn = false;
-            binding.txtstatus.setText("Tạm nghỉ");
+            binding.txtstatus.setText("Hoàn thành");
             binding.btnCheckIn.setText("Sẵn sàng làm việc");
         }
     }

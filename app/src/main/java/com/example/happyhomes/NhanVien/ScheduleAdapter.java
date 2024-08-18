@@ -21,12 +21,22 @@ public class ScheduleAdapter extends BaseAdapter {
     private List<Schedule> scheduleList;
     private LayoutInflater inflater;
     private long employeeId;
+    private boolean hideRegisterButton;
 
-    public ScheduleAdapter(Context context, List<Schedule> scheduleList, long employeeId) {
+    public ScheduleAdapter(Context context, List<Schedule> scheduleList, long employeeId,boolean hideRegisterButton) {
         this.context = context;
         this.scheduleList = scheduleList;
         this.employeeId = employeeId;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.hideRegisterButton = hideRegisterButton;
+    }
+
+    //de luu cong viec da chon
+    public ScheduleAdapter(Context context, List<Schedule> scheduleList, boolean hideRegisterButton) {
+        this.context = context;
+        this.scheduleList = scheduleList;
+        this.inflater = LayoutInflater.from(context);
+        this.hideRegisterButton = hideRegisterButton;
     }
 
     @Override
@@ -61,25 +71,31 @@ public class ScheduleAdapter extends BaseAdapter {
         txtLocation.setText(schedule.getLocation());
         txtStatus.setText(schedule.getStatus());
 
-        if ("Đã xác nhận".equals(schedule.getStatus()) || "Hoàn tất".equals(schedule.getStatus())) {
-            btnDki.setVisibility(View.GONE);
+
+
+        if (!hideRegisterButton) {
+            btnDki.setVisibility(View.GONE);  // Ẩn nút Đăng kí
         } else {
-            btnDki.setVisibility(View.VISIBLE);
-        }
-
-        btnDki.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseHelper dbHelper = new DatabaseHelper(context);
-                boolean success = dbHelper.registerSchedule(employeeId, schedule.getScheduleId());
-
-                if (success) {
-                    ((ScheduleActivity) context).refreshData();
-                } else {
-                    Toast.makeText(context, "Ca làm việc đã được người khác đăng kí!", Toast.LENGTH_SHORT).show();
-                }
+            if ("Đã xác nhận".equals(schedule.getStatus()) || "Hoàn tất".equals(schedule.getStatus())) {
+                btnDki.setVisibility(View.GONE);
+            } else {
+                btnDki.setVisibility(View.VISIBLE);
             }
-        });
+
+            btnDki.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseHelper dbHelper = new DatabaseHelper(context);
+                    boolean success = dbHelper.registerSchedule(employeeId, schedule.getScheduleId());
+
+                    if (success) {
+                        ((ScheduleActivity) context).refreshData();
+                    } else {
+                        Toast.makeText(context, "Ca làm việc đã được người khác đăng kí!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
 
         return convertView;
     }
