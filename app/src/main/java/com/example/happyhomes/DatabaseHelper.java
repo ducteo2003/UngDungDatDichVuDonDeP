@@ -470,13 +470,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // Lấy danh sách Schedule theo EMID mà không có STATUS là "Hoàn thành"
+    // Lấy danh sách Schedule theo EMID mà không có STATUS là "Hoàn tất"
     public List<Schedule> getAvailableSchedulesByEmployeeId(Long employeeId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_SCHEDULE + " WHERE " + COLUMN_SCHEDULE_ID + " IN (" +
                 "SELECT " + COLUMN_SCHEDULE_ID_FK + " FROM " + TABLE_SERVICE_SCHEDULE + " WHERE " + COLUMN_SER_SCHE_ID + " IN (" +
                 "SELECT " + COLUMN_SER_SCHE_ID + " FROM " + TABLE_WORKDATE + " WHERE " + COLUMN_EMID + " = ?" +
-                ")) AND " + COLUMN_STATUS + " != 'Hoàn thành'";
+                ")) AND " + COLUMN_STATUS + " != 'Hoàn tất'";
 
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(employeeId)});
 
@@ -509,11 +509,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Cập nhật STATUS của Schedule thành "Hoàn Thành"
+    // Cập nhật STATUS của Schedule thành "Hoàn tất"
     public void updateScheduleStatusToCompleted(Long scheduleId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_STATUS, "Hoàn thành");
+        values.put(COLUMN_STATUS, "Hoàn tất");
 
         db.update(TABLE_SCHEDULE, values, COLUMN_SCHEDULE_ID + " = ?", new String[]{String.valueOf(scheduleId)});
         db.close();

@@ -70,5 +70,15 @@ public class ChinhSach extends AppCompatActivity {
             }
         });
 
+        binding.backToNV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to the NhanVienActivity
+                Intent intent = new Intent(ChinhSach.this, NhanVienActivity.class);
+                startActivity(intent);
+                finish(); // Optional: Finish the current activity
+            }
+        });
+
     }
 }
