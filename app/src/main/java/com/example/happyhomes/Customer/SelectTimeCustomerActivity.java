@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,6 +63,18 @@ public class SelectTimeCustomerActivity extends AppCompatActivity {
             startActivity(payAndConfirmIntent);
         });
         loadData();
+        addEvent();
+    }
+
+    private void addEvent() {
+        // Back button event
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Go back to the previous screen
+                onBackPressed();
+            }
+        });
     }
 
     private void loadData() {
