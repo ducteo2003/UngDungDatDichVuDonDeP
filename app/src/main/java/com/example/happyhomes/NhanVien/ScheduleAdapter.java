@@ -1,6 +1,7 @@
 package com.example.happyhomes.NhanVien;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.happyhomes.DatabaseHelper;
 import com.example.happyhomes.Model.Schedule;
@@ -23,7 +26,7 @@ public class ScheduleAdapter extends BaseAdapter {
     private long employeeId;
     private boolean hideRegisterButton;
 
-    public ScheduleAdapter(Context context, List<Schedule> scheduleList, long employeeId,boolean hideRegisterButton) {
+    public ScheduleAdapter(Context context, List<Schedule> scheduleList, long employeeId, boolean hideRegisterButton) {
         this.context = context;
         this.scheduleList = scheduleList;
         this.employeeId = employeeId;
@@ -31,7 +34,7 @@ public class ScheduleAdapter extends BaseAdapter {
         this.hideRegisterButton = hideRegisterButton;
     }
 
-    //de luu cong viec da chon
+    // Constructor without employeeId
     public ScheduleAdapter(Context context, List<Schedule> scheduleList, boolean hideRegisterButton) {
         this.context = context;
         this.scheduleList = scheduleList;
@@ -71,13 +74,11 @@ public class ScheduleAdapter extends BaseAdapter {
         txtLocation.setText(schedule.getLocation());
         txtStatus.setText(schedule.getStatus());
 
-
-
         if (!hideRegisterButton) {
-            btnDki.setVisibility(View.GONE);  // Ẩn nút Đăng kí
+            btnDki.setVisibility(View.GONE);  // Hide the "Đăng kí" button
         } else {
-            if ("Đã xác nhận".equals(schedule.getStatus()) || "Hoàn tất".equals(schedule.getStatus())) {
-                btnDki.setVisibility(View.GONE);
+            if ("Đã xác nhận".equals(schedule.getStatus()) || "Hoàn tất".equals(schedule.getStatus()) || "Đang làm việc".equals(schedule.getStatus())) {
+                btnDki.setVisibility(View.GONE);  // Hide the button for these statuses
             } else {
                 btnDki.setVisibility(View.VISIBLE);
             }
@@ -85,14 +86,36 @@ public class ScheduleAdapter extends BaseAdapter {
             btnDki.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseHelper dbHelper = new DatabaseHelper(context);
-                    boolean success = dbHelper.registerSchedule(employeeId, schedule.getScheduleId());
+                    // Create a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Xác nhận đăng kí");
+                    builder.setMessage("Bạn có chắc chắn muốn đăng kí ca làm việc này?");
 
-                    if (success) {
-                        ((ScheduleActivity) context).refreshData();
-                    } else {
-                        Toast.makeText(context, "Ca làm việc đã được người khác đăng kí!", Toast.LENGTH_SHORT).show();
-                    }
+                    // Handle the "Yes" action
+                    builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DatabaseHelper dbHelper = new DatabaseHelper(context);
+                            boolean success = dbHelper.registerSchedule(employeeId, schedule.getScheduleId());
+
+                            if (success) {
+                                ((ScheduleActivity) context).refreshData();
+                            } else {
+                                Toast.makeText(context, "Ca làm việc đã được người khác đăng kí!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                    // Handle the "No" action
+                    builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();  // Close the dialog
+                        }
+                    });
+
+                    // Show the confirmation dialog
+                    builder.show();
                 }
             });
         }

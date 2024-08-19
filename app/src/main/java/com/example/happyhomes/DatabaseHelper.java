@@ -388,6 +388,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+// so saánh ngày và status
+    public List<Schedule> getSchedulesByDateAndStatus(Date date, List<String> statuses) {
+        List<Schedule> scheduleList = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String dateString = dateFormat.format(date);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuilder query = new StringBuilder("SELECT * FROM " + TABLE_SCHEDULE + " WHERE " + COLUMN_DATE + " = ? AND " + COLUMN_STATUS + " IN (");
+
+        for (int i = 0; i < statuses.size(); i++) {
+            query.append("?");
+            if (i < statuses.size() - 1) {
+                query.append(", ");
+            }
+        }
+        query.append(")");
+
+        String[] statusArray = statuses.toArray(new String[0]);
+        String[] args = new String[statusArray.length + 1];
+        args[0] = dateString;
+        System.arraycopy(statusArray, 0, args, 1, statusArray.length);
+
+        Cursor cursor = db.rawQuery(query.toString(), args);
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    String timeString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
+                    Date startTime = timeFormat.parse(timeString);
+
+                    Schedule schedule = new Schedule(
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
+                            cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
+                            date,
+                            startTime,
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                    );
+                    scheduleList.add(schedule);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return scheduleList;
+    }
 
 
 
@@ -480,18 +530,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(employeeId)});
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
         List<Schedule> schedules = new ArrayList<>();
         if (cursor.moveToFirst()) {
-            do {
+            try {
+                // Lấy chuỗi ngày và thời gian từ cơ sở dữ liệu
+                String dateString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
+                String timeString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
+
+                // Chuyển đổi các chuỗi này thành đối tượng Date
+                Date date = dateFormat.parse(dateString);
+                Date startTime = timeFormat.parse(timeString);
+
+                // Tạo đối tượng Schedule và thêm vào danh sách
                 Schedule schedule = new Schedule(
                         cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHEDULE_ID)),
                         cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CUS_ID)),
-                        new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE))),
-                        new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_START_TIME))),
+                        date,
+                        startTime,
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
                 );
                 schedules.add(schedule);
+            } catch (ParseException e) {
+                e.printStackTrace();
             } while (cursor.moveToNext());
         }
         cursor.close();
