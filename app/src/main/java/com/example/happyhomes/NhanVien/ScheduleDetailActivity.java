@@ -1,9 +1,11 @@
 package com.example.happyhomes.NhanVien;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,16 @@ public class ScheduleDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_detail);
+
+        LinearLayout backToNV = findViewById(R.id.backToNV);
+
+        backToNV.setOnClickListener(v -> {
+            Intent intent = new Intent(ScheduleDetailActivity.this, NhanVienActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+
 
         long scheduleId = getIntent().getLongExtra("SCHEDULE_ID", -1);
         Log.d("ScheduleDetailActivity", "Received Schedule ID: " + scheduleId);
