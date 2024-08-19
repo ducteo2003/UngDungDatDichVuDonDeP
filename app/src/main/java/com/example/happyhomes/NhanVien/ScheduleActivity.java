@@ -54,7 +54,7 @@ public class ScheduleActivity extends AppCompatActivity {
         caLam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                filterSchedulesByStatus(Arrays.asList("Đang chờ"));
+                refreshData();
             }
         });
 
