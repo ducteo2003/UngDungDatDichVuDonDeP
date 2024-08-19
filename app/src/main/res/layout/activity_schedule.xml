@@ -30,32 +30,33 @@
 
     </LinearLayout>
 
+    <!-- Thanh ngày với RecyclerView nằm ngang -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/caLam"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
             android:layout_marginEnd="30dp"
+            android:gravity="center"
             android:text="Tìm ca làm việc"
-            android:textSize="15dp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lichDK"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="Lịch đã đăng kí"
-            android:textSize="15dp"
+            android:textSize="16dp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Thanh ngày với RecyclerView nằm ngang -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDates"
         android:layout_width="match_parent"

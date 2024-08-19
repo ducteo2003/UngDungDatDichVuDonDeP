@@ -65,13 +65,13 @@ public class ScheduleDetailActivity extends AppCompatActivity {
                 TextView tvStartTime = findViewById(R.id.tvStartTime);
                 TextView tvLocation = findViewById(R.id.tvLocation);
 
-                tvScheduleId.setText("Schedule ID: " + scheduleId);
-                tvCustomerName.setText("Customer Name: " + customerName);
-                tvServiceType.setText("Service Type: " + serviceType);
-                tvServiceCost.setText("Service Cost: " + serviceCost);
-                tvDate.setText("Date: " + date);
-                tvStartTime.setText("Start Time: " + startTime);
-                tvLocation.setText("Location: " + location);
+                tvScheduleId.setText( ""+scheduleId);
+                tvCustomerName.setText(customerName);
+                tvServiceType.setText(serviceType);
+                tvServiceCost.setText(serviceCost + "vnd");
+                tvDate.setText( date);
+                tvStartTime.setText(startTime);
+                tvLocation.setText(location);
             } else {
                 Toast.makeText(this, "Không tìm thấy chi tiết lịch làm việc", Toast.LENGTH_SHORT).show();
             }

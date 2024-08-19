@@ -60,11 +60,17 @@ public class ScheduleActivity extends AppCompatActivity {
         });
         caLam.setOnClickListener(v -> {
             isCaLamSelected = true; // Set flag for caLam
+            // Đặt màu nền cam cho caLam và xóa màu nền của lichDK
+            caLam.setBackgroundColor(getResources().getColor(R.color.orange));
+            lichDK.setBackgroundColor(getResources().getColor(android.R.color.transparent));
             loadSchedulesForDateAndStatus(selectedDate, Arrays.asList("Đang chờ"));
         });
 
         lichDK.setOnClickListener(v -> {
             isCaLamSelected = false; // Set flag for lichDK
+            // Đặt màu nền cam cho lichDK và xóa màu nền của caLam
+            lichDK.setBackgroundColor(getResources().getColor(R.color.orange));
+            caLam.setBackgroundColor(getResources().getColor(android.R.color.transparent));
             loadSchedulesForDateAndStatus(selectedDate, Arrays.asList("Đã xác nhận"));
         });
 
@@ -116,4 +122,6 @@ public class ScheduleActivity extends AppCompatActivity {
         // Mặc định load các schedule có trạng thái là "Đang chờ" cho ngày hiện tại
         loadSchedulesForDateAndStatus(selectedDate, Arrays.asList("Đang chờ"));
     }
+
+
 }

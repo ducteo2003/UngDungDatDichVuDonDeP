@@ -41,55 +41,147 @@
             android:layout_height="wrap_content"
             android:text="Chi tiết công việc"
             android:textSize="26dp"
+            android:textColor="#2196F3"
             android:textStyle="bold" />
 
     </LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="8sp"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/tvScheduleId"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Schedule ID: "
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvCustomerName"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Schedule ID: "
+            android:textColor="#E95020"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvScheduleId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Customer Name: "
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvServiceType"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Name: "
+            android:textColor="#E95020"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvCustomerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Luân "
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Service Type: "
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvServiceCost"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ServiceType: "
+            android:textColor="#E95020"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvServiceType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhà 200m"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Service Cost: "
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ServiceCost: "
+            android:textColor="#E95020"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvServiceCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200000 "
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date: "
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvStartTime"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:textColor="#E95020"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19/08 "
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Time: "
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StartTime: "
+            android:textColor="#E95020"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19:00 "
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Location: "
-        android:textStyle="bold" />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: "
+            android:textColor="#E95020"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="78 lê văn việt, quận 9 "
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </LinearLayout>
