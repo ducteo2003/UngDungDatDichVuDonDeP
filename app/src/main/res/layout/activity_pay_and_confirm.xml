@@ -33,6 +33,7 @@
         app:layout_constraintTop_toTopOf="@id/ivBack"
         app:layout_constraintBottom_toBottomOf="@id/ivBack"
         android:layout_marginStart="16dp" />
+
     <!-- Work Location Title -->
     <TextView
         android:id="@+id/location_title"
@@ -46,6 +47,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent" />
+
     <!-- Work Location Details -->
     <LinearLayout
         android:id="@+id/location_details"
@@ -59,6 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="16dp">
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -166,7 +169,6 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Payment Method Details -->
     <!-- Payment Method Details with RadioGroup -->
     <RadioGroup
         android:id="@+id/payment_method_group"
@@ -242,6 +244,7 @@
             android:textSize="18sp"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -251,6 +254,7 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:layout_marginStart="-150dp"/>
+
         <Button
             android:id="@+id/btnPostJob"
             android:layout_width="wrap_content"
