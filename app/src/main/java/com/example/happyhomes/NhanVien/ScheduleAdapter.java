@@ -77,8 +77,12 @@ public class ScheduleAdapter extends BaseAdapter {
         if (!hideRegisterButton) {
             btnDki.setVisibility(View.GONE);  // Hide the "Đăng kí" button
         } else {
-            if ("Đã xác nhận".equals(schedule.getStatus()) || "Hoàn tất".equals(schedule.getStatus()) || "Đang làm việc".equals(schedule.getStatus())) {
+            if ("Đã xác nhận".equals(schedule.getStatus()) || "Hoàn tất".equals(schedule.getStatus())) {
+
                 btnDki.setVisibility(View.GONE);  // Hide the button for these statuses
+
+                btnDki.setVisibility(View.GONE);
+
             } else {
                 btnDki.setVisibility(View.VISIBLE);
             }

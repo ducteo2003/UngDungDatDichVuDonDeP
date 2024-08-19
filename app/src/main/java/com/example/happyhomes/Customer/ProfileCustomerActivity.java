@@ -40,6 +40,14 @@ public class ProfileCustomerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // Back button event
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Go back to the previous screen
+                onBackPressed();
+            }
+        });
     }
 
     private void loadData() {

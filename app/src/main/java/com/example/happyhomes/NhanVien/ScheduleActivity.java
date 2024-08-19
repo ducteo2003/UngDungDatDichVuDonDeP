@@ -58,7 +58,6 @@ public class ScheduleActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
         caLam.setOnClickListener(v -> {
             isCaLamSelected = true; // Set flag for caLam
             loadSchedulesForDateAndStatus(selectedDate, Arrays.asList("Đang chờ"));

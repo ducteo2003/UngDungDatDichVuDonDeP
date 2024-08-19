@@ -55,14 +55,12 @@ public class PayAndConfirmActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         // ZaloPay SDK Init
         ZaloPaySDK.init(2553, Environment.SANDBOX);
-
         // Handle the event when the Post Job button is pressed
         binding.btnPostJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveJobToDatabase();
                 showSuccessDialog();
-
             }
         });
     }
@@ -82,7 +80,19 @@ public class PayAndConfirmActivity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+        addEvent();
     }
+
+    private void addEvent() {
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Go back to the previous screen
+                onBackPressed();
+            }
+        });
+    }
+
     private void loadData() {
         // Get data from the intent and display on the TextViews
         Intent intent = getIntent();
@@ -113,7 +123,6 @@ public class PayAndConfirmActivity extends AppCompatActivity {
             Toast.makeText(this, "Error: Service not selected.", Toast.LENGTH_LONG).show();
             return;
         }
-        // Convert String to Date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()); // Ensure this format matches the date string
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault()); // Updated format to match "04:48"
 
@@ -151,8 +160,6 @@ public class PayAndConfirmActivity extends AppCompatActivity {
                             (long) serviceId,
                             payDay
                     );
-
-
                     databaseHelper.addPayment(payment);
                 }else if(binding.rdoZalo.isChecked()){
                     Payment payment = new Payment(
@@ -198,6 +205,8 @@ public class PayAndConfirmActivity extends AppCompatActivity {
                         Log.d("PayAndConfirmActivity", "Payment succeeded. ZP Trans Token: " + s + ", Info: " + s1);
                         Intent intent1 = new Intent(PayAndConfirmActivity.this, payContificationActivity.class);
                         intent1.putExtra("result", "thanh toan thanh cong");
+                        intent1.putExtra("Cusname", cusName);
+                        intent1.putExtra("CusId", cusId);
                         startActivity(intent1);
                     }
 
@@ -206,6 +215,8 @@ public class PayAndConfirmActivity extends AppCompatActivity {
                         Log.d("PayAndConfirmActivity", "Payment canceled. ZP Trans Token: " + s + ", Info: " + s1);
                         Intent intent1 = new Intent(PayAndConfirmActivity.this, payContificationActivity.class);
                         intent1.putExtra("result", "huy thanh toan");
+                        intent1.putExtra("Cusname", cusName);
+                        intent1.putExtra("CusId", cusId);
                         startActivity(intent1);
                     }
 
@@ -214,6 +225,8 @@ public class PayAndConfirmActivity extends AppCompatActivity {
                         Log.e("PayAndConfirmActivity", "Payment error: " + zaloPayError.toString() + ", ZP Trans Token: " + s + ", Info: " + s1);
                         Intent intent1 = new Intent(PayAndConfirmActivity.this, payContificationActivity.class);
                         intent1.putExtra("result", "loi thanh toan");
+                        intent1.putExtra("Cusname", cusName);
+                        intent1.putExtra("CusId", cusId);
                         startActivity(intent1);
                     }
                 });
